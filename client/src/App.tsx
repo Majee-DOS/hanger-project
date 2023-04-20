@@ -1,8 +1,10 @@
 import "./App.css";
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
 
 // import LoginView from "./components/LoginView"
-import MainPage from "./components/MainPage"
+import MainPage from "./components/MainPage";
 
 const App: React.FC = () => {
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -15,7 +17,12 @@ const App: React.FC = () => {
   //   setLoggedIn(false);
   // };
   // return <div className="App">{loggedIn ? <MainPage /> : <LoginView />}</div>;
-  return <MainPage />;
+  return (
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      
+    </Routes>
+  );
 };
 
 export default App;
