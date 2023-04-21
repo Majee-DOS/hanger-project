@@ -1,12 +1,15 @@
-const Router = require('koa-router')
+const Router = require("koa-router");
 const router = new Router();
+const controller = require("./controller");
 
-('/home')
-router.post('/login')
-router.get('/profile/:user')
-router.get('/:user/warderobe')
+router.post("/register", controller.create);
 
-router.post('/item/upload')
-router.get('/item/:id')
+// router.post("/login");
+// router.get("/profile/:user");
+// router.get("/:user/warderobe");
 
-module.exports = router
+router.post("/addItem", controller.add);
+
+router.get("/item/:id");
+
+module.exports = router;
