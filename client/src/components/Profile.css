@@ -1,0 +1,7 @@
+.profile-view {
+    height: 1100px;
+    background: radial-gradient(circle, #eee7e3 10%, transparent 11%);
+        background-size: 1em 1em;
+        background-color: #ffffff;
+        opacity: 1
+}

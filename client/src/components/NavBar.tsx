@@ -1,13 +1,15 @@
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDollar } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../images/Hanger.png";
-import Link from "react-router-dom";
 
 const NavBar: React.FC = () => {
   return (
-    <span className="flex justify-between bg-orange-100">
-      <img src={Logo} className="w-24 h-24 ml-8" />
+    <div className="flex justify-between bg-orange-100">
+      <a href="/home">
+        <img src={Logo} className="w-24 h-24 ml-8" />
+      </a>
       {/* image here */}
       <form className="ml-14">
         <input
@@ -20,10 +22,12 @@ const NavBar: React.FC = () => {
       </form>
       {/* searchBar here */}
       <div className="m-2 flex">
-        <FontAwesomeIcon
-          icon={faUserAstronaut}
-          className="userIcon p-4 mt-2 mr-9 text-2xl"
-        />
+        <a href="/profile">
+          <FontAwesomeIcon
+            icon={faUserAstronaut}
+            className="userIcon p-4 mt-2 mr-9 text-2xl"
+          />
+        </a>
 
         {/* profile img here  */}
         <FontAwesomeIcon
@@ -33,11 +37,11 @@ const NavBar: React.FC = () => {
         {/* notification icon here
       (with state if new message)  */}
       </div>
-      <button className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12">
+      <a href="/addItem" className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12">
         Sell Now
-      </button>
+      </a>
       {/*  sell button here */}
-    </span>
+    </div>
   );
 };
 
