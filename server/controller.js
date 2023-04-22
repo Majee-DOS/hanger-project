@@ -1,9 +1,9 @@
-const User = require("./models/User");
+const Model = require("./models/Model");
 
 exports.create = async (ctx) => {
   try {
-    const user = await User.createUser(ctx.request.body);
-    console.log(user);
+    const user = await Model.createUser(ctx.request.body);
+    console.log(ctx.request.body);
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
@@ -14,9 +14,10 @@ exports.create = async (ctx) => {
 
 exports.add = async (ctx) => {
   try {
-   console.log(ctx.request.body)
-    const addItem = await User.addItem(ctx.request.body);
-    console.log(addItem)
+    console.log(ctx.request.body);
+    console.log(ctx.request.user);
+    const addItem = await Model.addItem(ctx.request.body);
+    console.log(addItem);
     ctx.body = addItem;
     ctx.status = 201;
   } catch (error) {
@@ -25,11 +26,28 @@ exports.add = async (ctx) => {
   }
 };
 
-// exports.login = async (ctx) => {
-//   try {
-//     ctx.status = 200;
-//   } catch (error) {
-//     ctx.status = 500;
-//     console.log("cant create user");
-//   }
-// };
+exports.getUser = async (ctx) => {
+  try {
+    console.log(ctx.params.id);
+    const user = await Model.user(ctx.params.id);
+    ctx.body = user;
+    ctx.status = 200;
+  } catch (error) {
+    ctx.status = 500;
+    console.log("cant get this user");
+  }
+};
+
+exports.updateUser = async(ctx) => {
+  try {
+    const userId = ctx.params.id;
+    console.log(ctx.request.body)
+    const newData = await Model.update(ctx.request.body, userId)
+     console.log(newData);
+    ctx.body = newData
+    ctx.status = 201
+  } catch (error) {
+    ctx.status = 500;
+    console.log('cant update')
+  }
+}

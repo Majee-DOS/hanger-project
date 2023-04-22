@@ -8,20 +8,25 @@ export let newUser;
 interface RegisterProps {
   showLogin: () => void;
   toggleLoggedIn: () => void;
+  showRegistration: () => void;
 }
-const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn }) => {
+const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn, showRegistration }) => {
   const [userInp, setUserInp] = useState("");
   const [emailInp, setEmailInp] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleRegistration = async () => {
     const RegistrationForm = {
+      name: name,
       userName: userInp,
       email: emailInp,
       password: password,
     };
+    console.log(RegistrationForm)
     showLogin();
     toggleLoggedIn();
+    showRegistration()
 
     alert(`Hello ${userInp}! Your account is ready!`);
 
@@ -45,6 +50,13 @@ const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn }) => {
               <div className="mb-4 flex flex-col gap-6">
                 <Input
                   size="lg"
+                  label="Name"
+                  className="bg-white"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Input
+                  size="lg"
                   label="Userame"
                   className="bg-white"
                   value={userInp}
@@ -66,7 +78,7 @@ const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn }) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <a href="/home">
+              <a>
                 <Button
                   className="mt-6 bg-green-900"
                   fullWidth

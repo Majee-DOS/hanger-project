@@ -1,8 +1,7 @@
-import { useState } from "react";
-
 const rootURL = "http://localhost:3020";
 
 interface regUser {
+  name: String;
   userName: string;
   email: string;
   password: string;
@@ -17,11 +16,11 @@ export async function createUser(user: regUser) {
     body: JSON.stringify(user),
   })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => localStorage.setItem("userId", data._id));
 }
 
 interface item {
-  UID?: string;
+  user?: string;
   title: string;
   desc: string;
   category: string;
@@ -39,7 +38,30 @@ export async function addItem(item: item) {
   })
     .then((res) => res.json())
     .then((data) => console.log(data));
+}
 
+export async function getProfile(userId) {
+  const response = await fetch(`${rootURL}/profile/${userId}`);
+  return response.json();
+}
 
-    
+interface data {
+  houseNo: string;
+  street: string;
+  postCode: string;
+  city: string;
+}
+
+export async function addAddress(data: data, userId) {
+  const response = await fetch(`${rootURL}/update/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+
+  return response;
 }

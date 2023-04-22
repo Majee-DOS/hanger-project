@@ -79,14 +79,12 @@ const MainPage: React.FC = () => {
       <h2 className="text-3xl ">Main page content</h2>
           <Modal
             width={"1000px"}
-            // open={isRegOpen}
+            open={isRegOpen}
             onCancel={handleCancel}
             footer={false}
             >
-            <Register showLogin={showLogin} toggleLoggedIn={toggleLoggedIn} />
+            <Register showLogin={showLogin} toggleLoggedIn={toggleLoggedIn} showRegistration={showRegistration} />
           </Modal>
-
-            {/* {!isLoggedIn ? ( */}
               <>
               <Modal
             width={"800px"}
@@ -100,7 +98,7 @@ const MainPage: React.FC = () => {
               />
           </Modal>
         </>
-              {/* ) : null} */}
+            
       <Drawer
         title="Add Item"
         width={520}
