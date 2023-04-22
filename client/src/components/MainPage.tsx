@@ -3,53 +3,44 @@ import NavBar from "./NavBar";
 import FilterBar from "./FilterBar";
 import "./MainPage.css";
 import Logo from "../images/Hanger.png";
-import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Modal,
-  Col,
-  DatePicker,
-  Drawer,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-} from "antd";
+import { Button, Modal, Drawer, Select, Space } from "antd";
 import { useState, useEffect } from "react";
-import Register from "./Register"
-import LoginView from "./LoginView"
-import Sellitem from "./Sellitem"
+import Register from "./Register";
+import LoginView from "./LoginView";
+import Sellitem from "./Sellitem";
 
 const { Option } = Select;
 
 const MainPage: React.FC = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false)
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
-const [open, setOpen] = useState(false);
- 
-  function showPopup() {
-    setIsPopupOpen(!isPopupOpen)
+  const [isRegOpen, setIsRegOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [open, setOpen] = useState(false);
+  
+
+  function showRegistration() {
+    setIsRegOpen(!isRegOpen);
   }
   const showLogin = () => {
-    setIsLoginOpen(true)
+    // if(!isLoggedIn){
+    // setIsLoginOpen(true);
+    // }
+  };
+  const toggleLoggedIn = () => {
+    // setIsLoggedIn(false)
+   
+     setIsLoginOpen(false);
   }
 
   const handleCancel = () => {
-    setIsPopupOpen(false);
-    setIsLoginOpen(false)
+    setIsRegOpen(false);
+    setIsLoginOpen(false);
+    setOpen(false);
   };
   const showDrawer = () => {
     setOpen(true);
   };
 
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-showLogin()
-  },[])
 
   return (
     <div className="main-view">
@@ -86,36 +77,39 @@ showLogin()
         </svg>
       </div>
       <h2 className="text-3xl ">Main page content</h2>
+          <Modal
+            width={"1000px"}
+            // open={isRegOpen}
+            onCancel={handleCancel}
+            footer={false}
+            >
+            <Register showLogin={showLogin} toggleLoggedIn={toggleLoggedIn} />
+          </Modal>
 
-      <Modal
-        width={"1000px"}
-        open={isPopupOpen}
-        onCancel={handleCancel}
-        footer={false}
-      >
-        <Register showPopup={showPopup} />
-      </Modal>
-      <Modal
-        width={"800px"}
-        open={isLoginOpen}
-        onCancel={handleCancel}
-        footer={false}
-      >
-        <LoginView showPopup={showPopup} />
-      </Modal>
-
-      <Button type="primary" icon={<PlusOutlined />}>
-        New account
-      </Button>
+            {/* {!isLoggedIn ? ( */}
+              <>
+              <Modal
+            width={"800px"}
+            open={isLoginOpen}
+            onCancel={handleCancel}
+            footer={false}
+            >
+            <LoginView
+              showRegistration={showRegistration}
+              toggleLoggedIn={toggleLoggedIn}
+              />
+          </Modal>
+        </>
+              {/* ) : null} */}
       <Drawer
         title="Add Item"
         width={520}
-        onClose={onClose}
+        onClose={handleCancel}
         open={open}
         bodyStyle={{ paddingBottom: 80 }}
         extra={
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
           </Space>
         }
       >

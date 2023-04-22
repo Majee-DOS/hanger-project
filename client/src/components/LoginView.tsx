@@ -2,10 +2,18 @@ import React from "react";
 import "./LoginView.css";
 import Logo from "../images/Hanger.svg";
 
- interface RegisterProps {
-   showPopup: () => void;
- }
-const LoginView: React.FC<RegisterProps> = ({ showPopup }) => {
+interface RegisterProps {
+  showRegistration: () => void;
+  toggleLoggedIn: () => void;
+}
+const LoginView: React.FC<RegisterProps> = ({
+  showRegistration,
+  toggleLoggedIn,
+}) => {
+  const handleLogin = () => {
+    toggleLoggedIn();
+  };
+
   return (
     <div className="view">
       <div className="flex justify-center items-center pt-24 pb-30">
@@ -31,13 +39,14 @@ const LoginView: React.FC<RegisterProps> = ({ showPopup }) => {
               />
             </div>
             <a
-              href="/home"
               className=" rounded-lg mt-5 bg-amber-900 text-white text-center"
+              onClick={handleLogin}
             >
               Login
             </a>
             <p>
-              Dont have an account? Register <a onClick={showPopup}>here 🎯</a>
+              Dont have an account? Register{" "}
+              <a onClick={showRegistration}>here 🎯</a>
             </p>
           </div>
         </div>
