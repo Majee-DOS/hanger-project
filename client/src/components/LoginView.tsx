@@ -2,8 +2,10 @@ import React from "react";
 import "./LoginView.css";
 import Logo from "../images/Hanger.svg";
 
-
-const LoginView: React.FC = () => {
+ interface RegisterProps {
+   showPopup: () => void;
+ }
+const LoginView: React.FC<RegisterProps> = ({ showPopup }) => {
   return (
     <div className="view">
       <div className="flex justify-center items-center pt-24 pb-30">
@@ -35,7 +37,7 @@ const LoginView: React.FC = () => {
               Login
             </a>
             <p>
-              Dont have an account? Register <a href="/register">here 🎯</a>
+              Dont have an account? Register <a onClick={showPopup}>here 🎯</a>
             </p>
           </div>
         </div>

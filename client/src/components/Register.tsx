@@ -5,7 +5,11 @@ import { useState } from "react";
 import { createUser } from "../apiService";
 
 export let newUser;
-const Register: React.FC = () => {
+ interface RegisterProps {
+   showPopup: () => void;
+  
+ }
+const Register: React.FC<RegisterProps> = ({showPopup}) => {
   const [userInp, setUserInp] = useState("");
   const [emailInp, setEmailInp] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +27,7 @@ const Register: React.FC = () => {
     setEmailInp("");
     setUserInp("");
     setPassword("");
+    showPopup()
   };
 
   return (

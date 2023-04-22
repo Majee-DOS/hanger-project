@@ -3,24 +3,53 @@ import NavBar from "./NavBar";
 import FilterBar from "./FilterBar";
 import "./MainPage.css";
 import Logo from "../images/Hanger.png";
-import {Button, Modal} from "antd"
-import { useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Modal,
+  Col,
+  DatePicker,
+  Drawer,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+} from "antd";
+import { useState, useEffect } from "react";
 import Register from "./Register"
+import LoginView from "./LoginView"
+import Sellitem from "./Sellitem"
+
+const { Option } = Select;
 
 const MainPage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
-
-  const showPopup = () => {
-    setIsPopupOpen(true)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+const [open, setOpen] = useState(false);
+ 
+  function showPopup() {
+    setIsPopupOpen(!isPopupOpen)
   }
-
-  const handleOk = () => {
-    setIsPopupOpen(false);
-  };
+  const showLogin = () => {
+    setIsLoginOpen(true)
+  }
 
   const handleCancel = () => {
     setIsPopupOpen(false);
+    setIsLoginOpen(false)
   };
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+showLogin()
+  },[])
 
   return (
     <div className="main-view">
@@ -33,7 +62,10 @@ const MainPage: React.FC = () => {
             <h1 className="text-3xl p-4 text-center">
               Earn cash for clothes you're not wearing anymore!!
             </h1>
-            <a href="/addItem" className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3">
+            <a
+              onClick={showDrawer}
+              className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3"
+            >
               Sell now!
             </a>
           </div>
@@ -54,12 +86,41 @@ const MainPage: React.FC = () => {
         </svg>
       </div>
       <h2 className="text-3xl ">Main page content</h2>
-     <Button type="primary" onClick={showPopup}>
-        Open Modal
-      </Button>
-      <Modal width={"1000px"} open={isPopupOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Register />
+
+      <Modal
+        width={"1000px"}
+        open={isPopupOpen}
+        onCancel={handleCancel}
+        footer={false}
+      >
+        <Register showPopup={showPopup} />
       </Modal>
+      <Modal
+        width={"800px"}
+        open={isLoginOpen}
+        onCancel={handleCancel}
+        footer={false}
+      >
+        <LoginView showPopup={showPopup} />
+      </Modal>
+
+      <Button type="primary" icon={<PlusOutlined />}>
+        New account
+      </Button>
+      <Drawer
+        title="Add Item"
+        width={520}
+        onClose={onClose}
+        open={open}
+        bodyStyle={{ paddingBottom: 80 }}
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+          </Space>
+        }
+      >
+        <Sellitem />
+      </Drawer>
     </div>
   );
 };

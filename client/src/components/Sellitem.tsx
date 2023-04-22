@@ -79,10 +79,9 @@ const Item: React.FC = () => {
 
   return (
     <>
-      <div className="h-screen w-screen  blur-sm absolute z-10">
-        <div className="bg-green-900 h-screen"></div>
-      </div>
-      <div className="absolute z-20 mt-20 ml-96 popup bg-orange-100 rounded-xl flex items-center flex-col">
+    
+     
+      
         <div className="container rounded-lg border border-green-200 bg-white h-60 p-5 w-96 mt-10">
           <h3>Upload your File</h3>
           <div
@@ -164,8 +163,8 @@ const Item: React.FC = () => {
         >
           Upload
         </button>
-      </div>
-    </>
+     
+   </>
   );
 };
 

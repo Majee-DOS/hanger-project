@@ -10,7 +10,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .view {
     background-image: url("../images/blob.svg");
     background-repeat: no-repeat;
-    height: 1100px;
+    height: 800px;
     width: 100%;
     background-position: center;
     background-size: cover;
@@ -19,7 +19,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .view2 {
       background-image: url("../images/blob.svg");
     background-repeat: no-repeat;
-    height: 1100px;
+    height: 800px;
     width: 100%;
     background-position: center;
     background-size: cover;
