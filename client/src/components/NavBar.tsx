@@ -3,11 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDollar } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../images/Hanger.png";
+import { Button, Drawer, Space } from "antd";
+import { useState } from "react";
+import FilterBar from "./FilterBar";
+import type { DrawerProps } from "antd";
 
 const NavBar: React.FC = () => {
-
-
-
+  const [open, setOpen] = useState(false);
+ 
 
   return (
     <div className="flex justify-between bg-white">
@@ -26,7 +29,7 @@ const NavBar: React.FC = () => {
       </form>
       {/* searchBar here */}
       <div className="m-2 flex">
-        <a href="/profile" >
+        <a href="/profile">
           <FontAwesomeIcon
             icon={faUserAstronaut}
             className="userIcon p-4 mt-2 mr-9 text-2xl"
@@ -41,10 +44,14 @@ const NavBar: React.FC = () => {
         {/* notification icon here
       (with state if new message)  */}
       </div>
-      <a href="/addItem" className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12">
+      <a
+        href="/addItem"
+        className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12"
+      >
         Sell Now
       </a>
       {/*  sell button here */}
+     
     </div>
   );
 };
