@@ -56,7 +56,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className="profile-view">
-      <NavBar />
+      {/* <NavBar /> */}
       <FilterBar />
       <div className=" flex m-16">
         <FontAwesomeIcon

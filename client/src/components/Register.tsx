@@ -3,17 +3,22 @@ import "./LoginView.css";
 import { Input, Card, Typography, Button } from "@material-tailwind/react";
 import { useState } from "react";
 import { createUser } from "../apiService";
+import { message } from "antd";
 
 export let newUser;
 interface RegisterProps {
   toggleLoggedIn: () => void;
   showRegistration: () => void;
 }
-const Register: React.FC<RegisterProps> = ({ toggleLoggedIn, showRegistration }) => {
+const Register: React.FC<RegisterProps> = ({
+  toggleLoggedIn,
+  showRegistration,
+}) => {
   const [userInp, setUserInp] = useState("");
   const [emailInp, setEmailInp] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleRegistration = async () => {
     const RegistrationForm = {
@@ -22,17 +27,20 @@ const Register: React.FC<RegisterProps> = ({ toggleLoggedIn, showRegistration })
       email: emailInp,
       password: password,
     };
-    console.log(RegistrationForm)
     toggleLoggedIn();
-    showRegistration()
+    showRegistration();
 
-    alert(`Hello ${userInp}! Your account is ready!`);
+    info();
 
     newUser = await createUser(RegistrationForm);
 
     setEmailInp("");
     setUserInp("");
     setPassword("");
+  };
+
+  const info = () => {
+    messageApi.info(`Hello! Your account is ready!`);
   };
 
   return (
@@ -77,6 +85,7 @@ const Register: React.FC<RegisterProps> = ({ toggleLoggedIn, showRegistration })
                 />
               </div>
               <a>
+                {contextHolder}
                 <Button
                   className="mt-6 bg-green-900"
                   fullWidth

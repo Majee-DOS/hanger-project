@@ -11,13 +11,12 @@ import Sellitem from "./Sellitem";
 import { displayAllItems } from "../apiService";
 import Item from "./Item";
 
-const { Option } = Select;
-
 const MainPage: React.FC = () => {
-  const [isRegOpen, setIsRegOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(true);
+  const [isRegOpen, setIsRegOpen] = useState(true);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([])
+  const [newItems, setNewItems] = useState([])
 
 useEffect(() => {
   displayAllItems().then(data => [
@@ -26,6 +25,12 @@ useEffect(() => {
 }, [])
   function showRegistration() {
     setIsRegOpen(!isRegOpen);
+  }
+
+  function displayNewItems () {
+    displayAllItems().then(data => 
+      setNewItems(data)
+      )
   }
 
   const toggleLoggedIn = () => {
@@ -39,24 +44,21 @@ useEffect(() => {
   const showDrawer = () => {
     setOpen(true);
   };
-const handleDisplayAll = () => {
-  displayAllItems()
-}
 
   return (
     <div className="main-view">
-      <NavBar />
+      <NavBar displayNewItems={displayNewItems} />
       <FilterBar />
 
       <div className="Hero">
         <div className="flex justify-around">
           <div className="border-2 border-amber-900 rounded-lg bg-white w-96 h-56 ml-12 mt-12 flex flex-col">
-            <h1 className="text-3xl p-4 text-center">
+            <h1 className="text-3xl p-4 text-center ">
               Earn cash for clothes you're not wearing anymore!!
             </h1>
             <a
               onClick={showDrawer}
-              className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3"
+              className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
             >
               Sell now!
             </a>
@@ -77,11 +79,18 @@ const handleDisplayAll = () => {
           ></path>
         </svg>
       </div>
-      <h2 className="text-3xl ">Main page content</h2>
-    <button onClick={handleDisplayAll}>load Images</button>
-    <div>
-      {items.map(item => <Item key={item.id} item={item}/>)}
-    </div>
+      <h2 className="text-3xl ml-10">New!</h2>
+      <div className="flex ml-6 mr-6 overflow-auto">
+        {newItems.map((item) => (
+          <Item key={item._id} item={item} />
+        ))}
+      </div>
+      <h2 className="text-3xl ml-10 ">Collection</h2>
+      <div className="flex ml-6 mr-6 overflow-auto">
+        {items.map((item) => (
+          <Item key={item._id} item={item} />
+        ))}
+      </div>
       <Modal
         width={"1000px"}
         open={isRegOpen}
@@ -119,7 +128,7 @@ const handleDisplayAll = () => {
           </Space>
         }
       >
-        <Sellitem />
+        <Sellitem displayNewItems={displayNewItems} />
       </Drawer>
     </div>
   );

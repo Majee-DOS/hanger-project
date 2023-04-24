@@ -27,6 +27,7 @@ interface item {
   category: string;
   condition: string;
   price: string;
+  size: string;
 }
 
 export async function addItem(item: item, userId) {
@@ -38,7 +39,7 @@ export async function addItem(item: item, userId) {
     body: JSON.stringify(item),
   })
     .then((res) => res.json())
-    .then((data) => data);
+    .then((data) => console.log(data));
     return response
 }
 
@@ -84,6 +85,5 @@ export async function sendImage(img: img) {
 
 export async function displayAllItems() {
   const response = await fetch(`${rootURL}/allItems`);
-  console.log(response)
   return response.json();
 }

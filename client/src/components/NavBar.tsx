@@ -8,17 +8,21 @@ import { useState } from "react";
 import Sellitem from "./Sellitem";
 
 
-const NavBar: React.FC = () => {
+interface ItemProps {
+  displayNewItems: () => void;
+}
+
+const NavBar: React.FC<ItemProps> = ({ displayNewItems }) => {
   const [open, setOpen] = useState(false);
  
 
- const handleCancel = () => {
-  
-   setOpen(false);
- };
+  const handleCancel = () => {
+    setOpen(false);
+  };
   const showDrawer = () => {
     setOpen(true);
   };
+
 
   return (
     <div className="flex justify-between bg-white">
@@ -37,12 +41,13 @@ const NavBar: React.FC = () => {
       </form>
       {/* searchBar here */}
       <div className="m-2 flex">
-        <a href="/profile">
+        <a href="/profile" >
           <FontAwesomeIcon
             icon={faUserAstronaut}
             className="userIcon p-4 mt-2 mr-9 text-2xl"
           />
         </a>
+        
 
         {/* profile img here  */}
         <FontAwesomeIcon
@@ -72,7 +77,7 @@ const NavBar: React.FC = () => {
           </Space>
         }
       >
-        <Sellitem />
+        <Sellitem displayNewItems={displayNewItems} />
       </Drawer>
     </div>
   );

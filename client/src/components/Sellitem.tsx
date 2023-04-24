@@ -2,25 +2,29 @@ import React from "react";
 import "./Sellitem.css";
 import { useState } from "react";
 import { useRef } from "react";
-import { Textarea, Input } from "@material-tailwind/react";
+import { Textarea, Input, Select, Option } from "@material-tailwind/react";
 import { addItem } from "../apiService";
-import { sendImage } from "../apiService";
+import { sendImage, displayAllItems } from "../apiService";
 
-const Item: React.FC = () => {
-  const [imgInput, setImgInput] = useState("");
+interface ItemProps {
+  displayNewItems: () => void;
+}
+
+const Item: React.FC<ItemProps> = ({ displayNewItems }) => {
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
   const [priceInput, setPriceInput] = useState("");
   const [condInput, setCondInput] = useState("");
   const [catInput, setCatInput] = useState("");
+  const [sizeInput, setSizeInput] = useState("");
   const [previewSource, setPreviewSource] = useState(null);
 
   const inputFile = useRef<HTMLInputElement>();
-const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
   function handleDrop(e) {
     e.preventDefault();
     const file = e.target.files[0];
-    
+
     previewFile(file);
     if (inputFile.current) {
       inputFile.current.click();
@@ -34,48 +38,47 @@ const userId = localStorage.getItem("userId");
     };
   };
   function handleSubmitFile(e) {
-   
     e.preventDefault();
-    uploadImage(previewSource)
+    uploadImage(previewSource);
   }
 
   const uploadImage = (base64EncodedImage) => {
-
     const imageData = {
-      img: previewSource
-    }
+      img: previewSource,
+    };
     sendImage(imageData);
   };
 
   const handleUploadBtn = async (e) => {
     e.preventDefault();
     const formItem = {
-     img: previewSource,
+      img: previewSource,
       title: titleInput,
       desc: descInput,
       price: priceInput,
       condition: condInput,
       category: catInput,
+      size: sizeInput,
     };
-    addItem(formItem, userId );
-console.log(formItem)
-    // setCatInput("");
-    // setCondInput("");
-    // setDescInput("");
-    // setPriceInput("");
-    // setTitleInput("");
-    // setPreviewSource(null)
+    addItem(formItem, userId).then(() => displayNewItems());
+
+    console.log(formItem);
+    setCatInput("");
+    setCondInput("");
+    setDescInput("");
+    setPriceInput("");
+    setTitleInput("");
+    setSizeInput("");
+    setPreviewSource(null);
   };
 
   return (
     <>
-    
       {previewSource && (
         <img src={previewSource} alt="preview image" className="h-40" />
       )}
       <input ref={inputFile} type="file" name="image" onChange={handleDrop} />
-      <form onSubmit={handleSubmitFile}>
-      </form>
+      <form onSubmit={handleSubmitFile}></form>
 
       <form className="mt-10 flex mb-10">
         <div className="flex flex-col mr-10 gap-6">
@@ -93,25 +96,55 @@ console.log(formItem)
           />
         </div>
         <div className="flex flex-col gap-6">
-          <Input
-            value={priceInput}
-            label="Price"
+          <div className="flex items-baseline">
+            <h1 className="mr-1">£</h1>
+            <Input
+              value={priceInput}
+              label="Price"
+              type="number"
+              className="mb-5 bg-white "
+              onChange={(e) => setPriceInput(e.target.value)}
+            />
+          </div>
+          <Select
+            label="Select Size"
+            value={sizeInput}
             className="mb-5 bg-white "
-            onChange={(e) => setPriceInput(e.target.value)}
-          />
-          <Input
-            value={catInput}
-            label="Category"
-            className="mb-5 bg-white "
-            onChange={(e) => setCatInput(e.target.value)}
-          />
+            onChange={(e) => setSizeInput(e)}
+          >
+            <Option value="S">S</Option>
+            <Option value="M">M</Option>
+            <Option value="L">L</Option>
+            <Option value="XL">XL</Option>
+            <Option value="XXL">XXL</Option>
+            <Option value="0-3YO">0-3YO</Option>
+            <Option value="4-6YO">4-6YO</Option>
+            <Option value="7-9YO">7-9YO</Option>
+            <Option value="10-12YO">10-12YO</Option>
+          </Select>
 
-          <Input
+          <Select
+            label="Select Category"
+            value={catInput}
+            className="mb-5 bg-white "
+            onChange={(e) => setCatInput(e)}
+          >
+            <Option value="Men">Men</Option>
+            <Option value="Women">Women</Option>
+            <Option value="Kids">Kids</Option>
+          </Select>
+
+          <Select
             value={condInput}
             label="Condition"
             className="bg-white"
-            onChange={(e) => setCondInput(e.target.value)}
-          />
+            onChange={(e) => setCondInput(e)}
+          >
+            <Option value="New">New</Option>
+            <Option value="Like New">Like New</Option>
+            <Option value="Good">Good</Option>
+            <Option value="Used">Used</Option>
+          </Select>
         </div>
       </form>
       <button
@@ -126,27 +159,24 @@ console.log(formItem)
 
 export default Item;
 
-
-
- // const formData = new FormData()
-    // formData.append('file', test )
-    // formData.append('upload_preset', "dev_setups")
-    // // if (!previewSource) return;
-    // uploadImage(previewSource);
-    //     fetch("https://api.cloudinary.com/v1_1/yourCloudName/image/upload", {
-    //       method: "POST",
-    //       body: JSON.stringify(formData),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     })
-    //       .then((response) => {
-    //         if (!response.ok) {
-    //           throw new Error(response.statusText);
-    //         }
-    //         return response.json<T>();
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-          
+// const formData = new FormData()
+// formData.append('file', test )
+// formData.append('upload_preset', "dev_setups")
+// // if (!previewSource) return;
+// uploadImage(previewSource);
+//     fetch("https://api.cloudinary.com/v1_1/yourCloudName/image/upload", {
+//       method: "POST",
+//       body: JSON.stringify(formData),
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(response.statusText);
+//         }
+//         return response.json<T>();
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });

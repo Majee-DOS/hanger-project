@@ -27,10 +27,10 @@ const router = createBrowserRouter([
     path: "/profile",
     element: <Profile />,
   },
-  {
-    path: "/addItem",
-    element: <Sellitem />,
-  },
+  // {
+  //   path: "/addItem",
+  //   element: <Sellitem />,
+  // },
   // {
   //   path: "/register",
   //   element: <Register />,
