@@ -8,30 +8,29 @@ import { useState, useEffect } from "react";
 import Register from "./Register";
 import LoginView from "./LoginView";
 import Sellitem from "./Sellitem";
+import { displayAllItems } from "../apiService";
+import Item from "./Item";
 
 const { Option } = Select;
 
 const MainPage: React.FC = () => {
   const [isRegOpen, setIsRegOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [open, setOpen] = useState(false);
-  
+  const [items, setItems] = useState([])
 
+useEffect(() => {
+  displayAllItems().then(data => [
+    setItems(data)
+  ])
+}, [])
   function showRegistration() {
     setIsRegOpen(!isRegOpen);
   }
-  const showLogin = () => {
-    // if(!isLoggedIn){
-    // setIsLoginOpen(true);
-    // }
-  };
+
   const toggleLoggedIn = () => {
-    // setIsLoggedIn(false)
-   
      setIsLoginOpen(false);
   }
-
   const handleCancel = () => {
     setIsRegOpen(false);
     setIsLoginOpen(false);
@@ -40,7 +39,9 @@ const MainPage: React.FC = () => {
   const showDrawer = () => {
     setOpen(true);
   };
-
+const handleDisplayAll = () => {
+  displayAllItems()
+}
 
   return (
     <div className="main-view">
@@ -77,28 +78,35 @@ const MainPage: React.FC = () => {
         </svg>
       </div>
       <h2 className="text-3xl ">Main page content</h2>
-          <Modal
-            width={"1000px"}
-            open={isRegOpen}
-            onCancel={handleCancel}
-            footer={false}
-            >
-            <Register showLogin={showLogin} toggleLoggedIn={toggleLoggedIn} showRegistration={showRegistration} />
-          </Modal>
-              <>
-              <Modal
-            width={"800px"}
-            open={isLoginOpen}
-            onCancel={handleCancel}
-            footer={false}
-            >
-            <LoginView
-              showRegistration={showRegistration}
-              toggleLoggedIn={toggleLoggedIn}
-              />
-          </Modal>
-        </>
-            
+    <button onClick={handleDisplayAll}>load Images</button>
+    <div>
+      {items.map(item => <Item key={item.id} item={item}/>)}
+    </div>
+      <Modal
+        width={"1000px"}
+        open={isRegOpen}
+        onCancel={handleCancel}
+        footer={false}
+      >
+        <Register
+          toggleLoggedIn={toggleLoggedIn}
+          showRegistration={showRegistration}
+        />
+      </Modal>
+      <>
+        <Modal
+          width={"800px"}
+          open={isLoginOpen}
+          onCancel={handleCancel}
+          footer={false}
+        >
+          <LoginView
+            showRegistration={showRegistration}
+            toggleLoggedIn={toggleLoggedIn}
+          />
+        </Modal>
+      </>
+
       <Drawer
         title="Add Item"
         width={520}

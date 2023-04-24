@@ -20,6 +20,7 @@ export async function createUser(user: regUser) {
 }
 
 interface item {
+  img: string;
   user?: string;
   title: string;
   desc: string;
@@ -28,16 +29,17 @@ interface item {
   price: string;
 }
 
-export async function addItem(item: item) {
-  await fetch(rootURL + "/addItem", {
-    method: "POST",
+export async function addItem(item: item, userId) {
+  const response = await fetch(`${rootURL}/addItem/${userId}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(item),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data));
+    .then((data) => data);
+    return response
 }
 
 export async function getProfile(userId) {
@@ -46,8 +48,8 @@ export async function getProfile(userId) {
 }
 
 interface data {
-  houseNo: string;
-  street: string;
+  houseNo: number;
+  streetName: string;
   postCode: string;
   city: string;
 }
@@ -64,4 +66,24 @@ export async function addAddress(data: data, userId) {
     .then((data) => data);
 
   return response;
+}
+
+interface img{
+  img: any
+}
+
+export async function sendImage(img: img) {
+  await fetch(`${rootURL}/upload/image`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(img)
+  })
+}
+
+export async function displayAllItems() {
+  const response = await fetch(`${rootURL}/allItems`);
+  console.log(response)
+  return response.json();
 }

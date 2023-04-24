@@ -4,7 +4,7 @@ import FilterBar from "./FilterBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import "./Profile.css";
-import { Button, Modal, Drawer, Select, Space } from "antd";
+import { Button, Drawer, Space } from "antd";
 import { getProfile, addAddress } from "../apiService";
 import { useEffect, useState } from "react";
 import { Input } from "@material-tailwind/react";
@@ -14,8 +14,8 @@ const Profile: React.FC = () => {
   const [userEmail, setUserEmail] = useState(null);
   const [name, setName] = useState(null);
   const [open, setOpen] = useState(false);
-  const [houseNo, setHouseNo] = useState("");
-  const [street, setStreet] = useState("");
+  const [houseNo, setHouseNo] = useState(null);
+  const [streetName, setStreetName] = useState("");
   const [postCode, setPostCode] = useState("");
   const [city, setCity] = useState("");
 
@@ -34,15 +34,14 @@ const Profile: React.FC = () => {
   const handleUpdate = async () => {
     const data = {
       houseNo: houseNo,
-      street: street,
+      streetName: streetName,
       postCode: postCode,
       city: city,
     }
     console.log(data)
     const user = await addAddress(data, userId);
-    console.log(user)
-    setHouseNo(user.homeNo);
-    setStreet(user.street);
+    setHouseNo(user.houseNo);
+    setStreetName(user.streetName);
     setPostCode(user.postCode);
     setCity(user.city);
   };
@@ -53,7 +52,6 @@ const Profile: React.FC = () => {
     setUserEmail(user.email);
     setName(user.name);
     setOpen(false)
-    console.log('clicking on udate btn')
   }
 
   return (
@@ -78,7 +76,7 @@ const Profile: React.FC = () => {
               <ul>
                 <li>Address:</li>
                 <li>{houseNo}</li>
-                <li>{street}</li>
+                <li>{streetName}</li>
                 <li>{postCode}</li>
                 <li>{city}</li>
               </ul>
@@ -115,10 +113,10 @@ const Profile: React.FC = () => {
               onChange={(e) => setHouseNo(e.target.value)}
             />
             <Input
-              value={street}
+              value={streetName}
               label="Street"
               className="bg-white"
-              onChange={(e) => setStreet(e.target.value)}
+              onChange={(e) => setStreetName(e.target.value)}
             />
             <Input
               value={postCode}

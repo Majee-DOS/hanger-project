@@ -6,11 +6,10 @@ import { createUser } from "../apiService";
 
 export let newUser;
 interface RegisterProps {
-  showLogin: () => void;
   toggleLoggedIn: () => void;
   showRegistration: () => void;
 }
-const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn, showRegistration }) => {
+const Register: React.FC<RegisterProps> = ({ toggleLoggedIn, showRegistration }) => {
   const [userInp, setUserInp] = useState("");
   const [emailInp, setEmailInp] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +23,6 @@ const Register: React.FC<RegisterProps> = ({ showLogin, toggleLoggedIn, showRegi
       password: password,
     };
     console.log(RegistrationForm)
-    showLogin();
     toggleLoggedIn();
     showRegistration()
 
