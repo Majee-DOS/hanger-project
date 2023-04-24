@@ -7,10 +7,10 @@ exports.createUser = (user) => {
   return newUser;
 };
 
-exports.addItem = (itemData, userId) => {
- const newItem = new Item({...itemData, user: userId })
- newItem.save();
- return newItem
+exports.addItem =  async (itemData, userId) => {
+ const newItem = await new Item({...itemData, user: userId })
+ return newItem.save();
+
 
 };
 
@@ -24,4 +24,9 @@ exports.update = async(data, uderId) => {
   const newUser = await new UserAddress({...data, user: uderId})
   // return updatedUser
   return newUser.save()
+}
+
+exports.getAll = async() => {
+  const allItems = await Item.find();
+  return allItems;
 }

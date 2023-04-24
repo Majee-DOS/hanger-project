@@ -11,18 +11,18 @@ mongoose
 
 const userData = new mongoose.Schema({
   warderobe: { type: mongoose.Schema.Types.ObjectId, ref: "itemData" },
-  name: { type: String },
-  userName: { type: String },
-  password: { type: String },
-  email: { type: String },
+  name: { type: String, required: true },
+  userName: { type: String, required: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true },
  
 });
 
 const userAddress = new mongoose.Schema({
-  houseNo: { type: Number },
-  streetName: { type: String },
-  postCode: { type: String },
-  city: { type: String },
+  houseNo: { type: Number, required: true },
+  streetName: { type: String, required: true },
+  postCode: { type: String, required: true },
+  city: { type: String, required: true },
   address: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "userData",
@@ -31,12 +31,13 @@ const userAddress = new mongoose.Schema({
 
 const itemData = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "userData" },
-  title: { type: String },
-  desc: { type: String },
-  category: { type: String },
-  condition: { type: String },
-  price: { type: Number },
-  img: { type: String },
+  title: { type: String, required: true },
+  desc: { type: String, required: true },
+  category: { type: String, required: true },
+  condition: { type: String, required: true },
+  price: { type: Number, required: true },
+  size: {type: String, required: true},
+  img: { type: String, required: true },
 });
 
 const User = mongoose.model("userData", userData);

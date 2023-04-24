@@ -7,10 +7,14 @@ router.post("/register", controller.create);
 router.put("/update/:id", controller.updateUser);
 
 router.get("/profile/:id", controller.getUser);
-// router.get("/:user/warderobe");
+// router.post("/upload/image", controller.uploadData);
 
-router.post("/addItem", controller.add);
+router.put(
+  "/addItem/:id",
+ 
+  controller.add
+);
 
-// router.get("/item/:id");
+router.get("/allitems", controller.getAllItems);
 
 module.exports = router;
