@@ -31,6 +31,7 @@ const userAddress = new mongoose.Schema({
 
 const itemData = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "userData" },
+  timestamp: {type: Date, default: Date.now},
   title: { type: String, required: true },
   desc: { type: String, required: true },
   category: { type: String, required: true },

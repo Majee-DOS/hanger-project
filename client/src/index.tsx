@@ -4,37 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainPage from "./components/MainPage";
-import Profile from "./components/Profile";
-import LoginView from "./components/LoginView";
-import Sellitem from "./components/Sellitem";
-import Register from "./components/Register";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
   },
-  {
-    path: "/home",
-    element: <MainPage />,
-  },
-  // {
-  //   path: "/login",
-  //   element: <LoginView />,
-  // },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  // {
-  //   path: "/addItem",
-  //   element: <Sellitem />,
-  // },
-  // {
-  //   path: "/register",
-  //   element: <Register />,
-  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

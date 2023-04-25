@@ -3,14 +3,10 @@ import "./Sellitem.css";
 import { useState } from "react";
 import { useRef } from "react";
 import { Textarea, Input, Select, Option } from "@material-tailwind/react";
-import { addItem } from "../apiService";
-import { sendImage, displayAllItems } from "../apiService";
+import { addItem, sendImage } from "../apiService";
 
-interface ItemProps {
-  displayNewItems: () => void;
-}
 
-const Item: React.FC<ItemProps> = ({ displayNewItems }) => {
+const Item: React.FC = () => {
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
   const [priceInput, setPriceInput] = useState("");
@@ -21,6 +17,7 @@ const Item: React.FC<ItemProps> = ({ displayNewItems }) => {
 
   const inputFile = useRef<HTMLInputElement>();
   const userId = localStorage.getItem("userId");
+
   function handleDrop(e) {
     e.preventDefault();
     const file = e.target.files[0];
@@ -60,9 +57,10 @@ const Item: React.FC<ItemProps> = ({ displayNewItems }) => {
       category: catInput,
       size: sizeInput,
     };
-    addItem(formItem, userId).then(() => displayNewItems());
 
-    console.log(formItem);
+    await addItem(formItem, userId);
+
+
     setCatInput("");
     setCondInput("");
     setDescInput("");
@@ -159,24 +157,3 @@ const Item: React.FC<ItemProps> = ({ displayNewItems }) => {
 
 export default Item;
 
-// const formData = new FormData()
-// formData.append('file', test )
-// formData.append('upload_preset', "dev_setups")
-// // if (!previewSource) return;
-// uploadImage(previewSource);
-//     fetch("https://api.cloudinary.com/v1_1/yourCloudName/image/upload", {
-//       method: "POST",
-//       body: JSON.stringify(formData),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error(response.statusText);
-//         }
-//         return response.json<T>();
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });

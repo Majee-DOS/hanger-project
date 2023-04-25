@@ -2,19 +2,19 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDollar } from "@fortawesome/free-solid-svg-icons";
-import Logo from "../images/Hanger.png";
+import Logo from "../images/Hanger.svg";
 import { Button, Drawer, Space } from "antd";
 import { useState } from "react";
 import Sellitem from "./Sellitem";
 
-
 interface ItemProps {
-  displayNewItems: () => void;
+ setSearchText:any
+  toggleComponent:() => void
+  
 }
 
-const NavBar: React.FC<ItemProps> = ({ displayNewItems }) => {
+const NavBar: React.FC<ItemProps> = ({ toggleComponent, setSearchText}) => {
   const [open, setOpen] = useState(false);
- 
 
   const handleCancel = () => {
     setOpen(false);
@@ -23,31 +23,27 @@ const NavBar: React.FC<ItemProps> = ({ displayNewItems }) => {
     setOpen(true);
   };
 
-
   return (
     <div className="flex justify-between bg-white">
-      <a href="/home">
+      <a onClick={toggleComponent}>
         <img src={Logo} className="w-24 h-24 ml-8" />
       </a>
       {/* image here */}
       <form className="ml-14">
         <input
           type="text"
-          className="px-96 py-4 m-2 mt-4 rounded-full form-input ring-2 ring-amber-900"
+          className="px-60 py-4 m-2 mt-4 rounded-full form-input ring-2 ring-amber-900" placeholder="Search" onChange={(e) => setSearchText(e.target.value)}
         />
-        <button className="p-2 ring-2 ring-amber-900 bg-amber-900 text-white rounded-md">
-          Search
-        </button>
+        
       </form>
       {/* searchBar here */}
       <div className="m-2 flex">
-        <a href="/profile" >
+        <a onClick={toggleComponent}>
           <FontAwesomeIcon
             icon={faUserAstronaut}
-            className="userIcon p-4 mt-2 mr-9 text-2xl"
+            className="p-4 mt-2 mr-9 text-2xl hover:cursor-pointer"
           />
         </a>
-        
 
         {/* profile img here  */}
         <FontAwesomeIcon
@@ -59,7 +55,7 @@ const NavBar: React.FC<ItemProps> = ({ displayNewItems }) => {
       </div>
       <a
         onClick={showDrawer}
-        className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer"
+        className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center"
       >
         Sell Now
       </a>
@@ -77,7 +73,7 @@ const NavBar: React.FC<ItemProps> = ({ displayNewItems }) => {
           </Space>
         }
       >
-        <Sellitem displayNewItems={displayNewItems} />
+        <Sellitem />
       </Drawer>
     </div>
   );

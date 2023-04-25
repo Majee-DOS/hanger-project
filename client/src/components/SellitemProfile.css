@@ -1,0 +1,11 @@
+.popup {
+  height: 700px;
+  width: 680px;
+  border: solid black 1px;
+}
+.drag-area img {
+
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover;
+}

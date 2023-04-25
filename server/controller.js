@@ -1,9 +1,8 @@
 const Model = require("./models/Model");
-const cloudinery  = require("./utils/cloudinary");
+// const cloudinery  = require("./utils/cloudinary");
 exports.create = async (ctx) => {
   try {
     const user = await Model.createUser(ctx.request.body);
-    console.log(ctx.request.body);
     ctx.body = user;
     ctx.status = 201;
   } catch (error) {
@@ -15,10 +14,7 @@ exports.create = async (ctx) => {
 exports.add = async (ctx) => {
   try {
     const userId = ctx.params.id;
-    console.log(userId)
-    console.log(ctx.request.body)
     const addItem = await Model.addItem(ctx.request.body, userId);
-    console.log(addItem);
     ctx.body = addItem;
     ctx.status = 201;
   } catch (error) {
@@ -37,6 +33,18 @@ exports.getUser = async (ctx) => {
     console.log("cant get this user");
   }
 };
+exports.getMine = async (ctx) => {
+  try {
+    const userId = ctx.params.user
+  
+    const myItems = await Model.getMany(userId)
+    ctx.body = myItems 
+    ctx.status = 200
+  } catch (error) {
+    ctx.status = 500;
+    console.log("cant find your wardrobe")
+  }
+}
 
 exports.updateUser = async (ctx) => {
   try {
@@ -47,19 +55,6 @@ exports.updateUser = async (ctx) => {
   } catch (error) {
     ctx.status = 500;
     console.log("cant update");
-  }
-};
-
-exports.uploadData = async (ctx) => {
-  try {
-    const imgFile = ctx.request.body;
-    const uploadedResponse = await cloudinery.uploader.upload(imgFile, {
-      upload_preset: "dev_setups"
-    })
-    console.log(uploadedResponse)
-  } catch (error) {
-    ctx.status = 500;
-    console.log("cant update data");
   }
 };
 

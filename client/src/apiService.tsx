@@ -39,7 +39,9 @@ export async function addItem(item: item, userId) {
     body: JSON.stringify(item),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data));
+    .then((data) => {
+    localStorage.setItem("itemId", data._id); 
+    localStorage.setItem("user", data.user)});
     return response
 }
 
@@ -86,4 +88,9 @@ export async function sendImage(img: img) {
 export async function displayAllItems() {
   const response = await fetch(`${rootURL}/allItems`);
   return response.json();
+}
+
+export async function myWardrobe(user) {
+  const response = await fetch(`${rootURL}/wardrobe/${user}`);
+  return response.json()
 }
