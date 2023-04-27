@@ -51,12 +51,13 @@ const registerUser = async (ctx, next) => {
       ctx.status = 400;
       ctx.body = { message: 'Passwords do not match' };
     } else {
-      const createUser = await model.createUser(ctx.body);
+      const createUser = await model.createUser(ctx.request.body);
       ctx.status = 201;
       ctx.body = createUser;
     }
   } catch (error) {
     next(error);
+    // console.log(error);
   }
 };
 

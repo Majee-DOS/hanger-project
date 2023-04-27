@@ -2,7 +2,7 @@ const mongoose = require('../db');
 const bcrypt = require('bcrypt');
 
 const userData = new mongoose.Schema({
-  warderobe: { type: mongoose.Schema.Types.ObjectId, ref: 'itemData' },
+  wardrobe: { type: mongoose.Schema.Types.ObjectId, ref: 'itemData' },
   name: { type: String, required: true },
   email: { type: String, required: true },
   userName: { type: String, required: true },
@@ -16,8 +16,7 @@ const User = mongoose.model('userData', userData);
 const createUser = async (user) => {
   const hashedPassword = await bcrypt.hash(user.password, 10);
   const newUser = new User({ ...user, password: hashedPassword });
-  newUser.save();
-  return newUser;
+  return newUser.save();
 };
 
 const passwordMatch = async (password, confirmPassword) => {
