@@ -40,16 +40,10 @@ const loginUser = async (ctx, next) => {
 const registerUser = async (ctx, next) => {
   try {
     const existingEmail = await model.emailExists(ctx.request.body.email);
-    const matchingPassword = await model.passwordMatch(
-      ctx.request.body.password,
-      ctx.request.body.confirmPassword
-    );
+
     if (existingEmail) {
       ctx.status = 400;
       ctx.body = { message: 'Email already in use' };
-    } else if (!matchingPassword) {
-      ctx.status = 400;
-      ctx.body = { message: 'Passwords do not match' };
     } else {
       const createUser = await model.createUser(ctx.request.body);
       ctx.status = 201;

@@ -2,12 +2,10 @@ const mongoose = require('../db');
 const bcrypt = require('bcrypt');
 
 const userData = new mongoose.Schema({
-  wardrobe: { type: mongoose.Schema.Types.ObjectId, ref: 'itemData' },
   name: { type: String, required: true },
   email: { type: String, required: true },
   userName: { type: String, required: true },
   password: { type: String, required: true },
-  confirmPassword: { type: String, required: true },
 });
 
 const User = mongoose.model('userData', userData);
@@ -17,10 +15,6 @@ const createUser = async (user) => {
   const hashedPassword = await bcrypt.hash(user.password, 10);
   const newUser = new User({ ...user, password: hashedPassword });
   return newUser.save();
-};
-
-const passwordMatch = async (password, confirmPassword) => {
-  return password === confirmPassword;
 };
 
 const getUserByEmail = async (email) => {
@@ -39,5 +33,4 @@ module.exports = {
   getUserByEmail,
   emailExists,
   getUserById,
-  passwordMatch,
 };

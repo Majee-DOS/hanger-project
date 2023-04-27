@@ -1,7 +1,6 @@
 const mongoose = require('../db');
 
 const itemData = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'userData' },
   timestamp: { type: Date, default: Date.now },
   title: { type: String, required: true },
   desc: { type: String, required: true },
@@ -10,6 +9,10 @@ const itemData = new mongoose.Schema({
   price: { type: Number, required: true },
   size: { type: String, required: true },
   img: { type: String, required: true },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userData',
+  },
 });
 
 const Item = mongoose.model('itemData', itemData);
@@ -23,9 +26,10 @@ const getItemsByUserId = async (userId) => {
   const data = await Item.find({ user: userId });
   return data;
 };
-const addItemToUser = async (itemData, userId) => {
-  const newItem = await new Item({ ...itemData, user: userId });
-  return newItem.save();
+
+const addItemToUser = async (itemInfo, userId, next) => {
+  const newItem = new Item({ ...itemInfo, user: userId });
+  return await newItem.save();
 };
 
 const editItem = (itemId, updatedItemData) => {
