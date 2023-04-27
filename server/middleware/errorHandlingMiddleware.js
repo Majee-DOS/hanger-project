@@ -29,31 +29,28 @@ const getHttpStatusCode = ({ error, response }) => {
   return 500;
 };
 
-const errorHandlingMiddleware = (error, request, response, next) => {
-  const errorMessage = getErrorMessage(error);
+const errorHandlingMiddleware = async (ctx, next) => {
+  try {
+    await next();
+  } catch (error) {
+    const errorMessage = getErrorMessage(error);
 
-  errorMessageLog(errorMessage);
+    errorMessageLog(errorMessage);
 
-  if (response.headerSent) {
-    return next(error);
+    if (ctx.res.headerSent) {
+      return next(error);
+    }
+
+    const errorResponse = {
+      statusCode: getHttpStatusCode({ error, response: ctx.response }),
+      body: undefined,
+    };
+
+    ctx.status = errorResponse.statusCode;
+
+    ctx.type = 'application/json';
+    ctx.body = { message: errorResponse.body };
   }
-
-  const errorResponse = {
-    statusCode: getHttpStatusCode({ error, response }),
-    body: undefined,
-  };
-
-  response.status(errorResponse.statusCode);
-
-  response.format({
-    json: () => {
-      response.json({ message: errorResponse.body });
-    },
-    default: () => {
-      response.type('text/plain').send(errorResponse.body);
-    },
-  });
-  next();
 };
 
-module.export = { errorHandlingMiddleware };
+module.exports = { errorHandlingMiddleware };
