@@ -37,16 +37,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerUser = exports.loginUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const jsonwebtoken_1 = require("jsonwebtoken");
 const model = __importStar(require("../models/userModel"));
 const SECRET_KEY = process.env.SECRET_KEY || 'dawgy this aint safe at aawwwll';
 const loginUser = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const requestBody = ctx.request.body;
         const user = yield model.getUserByEmail(requestBody.email);
-        if (user &&
-            (yield bcrypt_1.default.compare(requestBody.password, user.password))) {
-            const token = jsonwebtoken_1.default.sign({ _id: user._id }, SECRET_KEY, {
+        if (user && (yield bcrypt_1.default.compare(requestBody.password, user.password))) {
+            const token = (0, jsonwebtoken_1.sign)({ _id: user._id }, SECRET_KEY, {
                 expiresIn: '24h',
             });
             ctx.status = 200;

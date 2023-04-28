@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import * as model from '../models/userModel';
 import { Context, Next } from 'koa';
 import { IUser } from '../interfaces/userInterface';
@@ -11,11 +11,8 @@ const loginUser = async (ctx: Context, next: Next): Promise<void> => {
     const requestBody = ctx.request.body as IUser;
     const user = await model.getUserByEmail(requestBody.email);
 
-    if (
-      user &&
-      (await bcrypt.compare(requestBody.password, user.password))
-    ) {
-      const token = jwt.sign({ _id: user._id }, SECRET_KEY, {
+    if (user && (await bcrypt.compare(requestBody.password, user.password))) {
+      const token = sign({ _id: user._id }, SECRET_KEY, {
         expiresIn: '24h',
       });
       ctx.status = 200;

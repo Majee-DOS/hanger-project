@@ -1,5 +1,5 @@
 import { Result } from 'antd';
-import { mongoose }  from '../db';
+import { mongoose } from '../db';
 import bcrypt from 'bcrypt';
 import { IUser } from '../interfaces/userInterface';
 
@@ -33,12 +33,7 @@ const emailExists = async (email: string): Promise<boolean> => {
 
 const getUserById = async (userId: string): Promise<string> => {
   const result = User.findOne({ _id: userId });
-  return String(Result);
+  return String(result);
 };
 
-export {
-  createUser,
-  getUserByEmail,
-  emailExists,
-  getUserById,
-}
+export { createUser, getUserByEmail, emailExists, getUserById };
