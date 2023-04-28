@@ -1,4 +1,4 @@
-import {mongoose} from '../db';
+import { mongoose } from '../db';
 
 export interface IUserAddress {
   houseNo: number;
