@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserById = exports.emailExists = exports.getUserByEmail = exports.createUser = void 0;
-const antd_1 = require("antd");
 const db_1 = require("../db");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const userData = new db_1.mongoose.Schema({
@@ -39,11 +38,11 @@ exports.getUserByEmail = getUserByEmail;
 The Boolean() function converts any truthy value to true and any falsy value (including null and undefined) to false. */
 const emailExists = (email) => __awaiter(void 0, void 0, void 0, function* () {
     const result = User.exists({ email });
-    return Boolean(result);
+    return result;
 });
 exports.emailExists = emailExists;
 const getUserById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = User.findOne({ _id: userId });
-    return String(antd_1.Result);
+    return result;
 });
 exports.getUserById = getUserById;

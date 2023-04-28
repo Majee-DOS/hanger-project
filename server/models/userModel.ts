@@ -1,4 +1,3 @@
-import { Result } from 'antd';
 import { mongoose } from '../db';
 import bcrypt from 'bcrypt';
 import { IUser } from '../interfaces/userInterface';
@@ -26,14 +25,14 @@ const getUserByEmail = async (email: string): Promise<IUser | null> => {
 //Need to explicitly cast the result of  User.exists({ email }) to a boolean type
 /* This ensures that the function always returns a boolean value, regardless of the actual value returned by User.exists.
 The Boolean() function converts any truthy value to true and any falsy value (including null and undefined) to false. */
-const emailExists = async (email: string): Promise<boolean> => {
+const emailExists = async (email: string) => {
   const result = User.exists({ email });
-  return Boolean(result);
+  return result;
 };
 
-const getUserById = async (userId: string): Promise<string> => {
+const getUserById = async (userId: string) => {
   const result = User.findOne({ _id: userId });
-  return String(result);
+  return result;
 };
 
 export { createUser, getUserByEmail, emailExists, getUserById };

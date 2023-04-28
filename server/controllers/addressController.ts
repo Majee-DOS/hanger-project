@@ -3,7 +3,7 @@ import {
   addUserAddress,
   updateAddress as updateAddressModel,
 } from '../models/addressModel';
-import { Context, Next } from 'koa';
+import { Context, Next, ParameterizedContext } from 'koa';
 
 const registerAddress = async (ctx: Context, next: Next) => {
   // console.log(ctx.state);
@@ -20,10 +20,10 @@ const registerAddress = async (ctx: Context, next: Next) => {
   }
 };
 
-const updateAddress = async (ctx: Context, next: Next) => {
+const updateAddress = async (ctx: ParameterizedContext, next: Next) => {
   try {
-    console.log(ctx.request.params.id);
-    const { id: addressId } = ctx.request.params;
+    console.log(ctx.params.id);
+    const { id: addressId } = ctx.params;
     const updatedAddress = ctx.request.body as IUserAddress;
     const result = await updateAddressModel(addressId, updatedAddress);
     ctx.status = 201;
