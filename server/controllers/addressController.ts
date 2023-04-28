@@ -22,7 +22,7 @@ const registerAddress = async (ctx: Context, next: Next) => {
 
 const updateAddress = async (ctx: ParameterizedContext, next: Next) => {
   try {
-    console.log(ctx.params);
+    // console.log(ctx.params);
     const { _id: addressId } = ctx.params;
     const updatedAddress = ctx.request.body as IUserAddress;
     const result = await updateAddressModel(addressId, updatedAddress);
