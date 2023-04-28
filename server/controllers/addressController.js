@@ -26,7 +26,7 @@ const registerAddress = (ctx, next) => __awaiter(void 0, void 0, void 0, functio
 exports.registerAddress = registerAddress;
 const updateAddress = (ctx, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(ctx.params);
+        // console.log(ctx.params);
         const { _id: addressId } = ctx.params;
         const updatedAddress = ctx.request.body;
         const result = yield (0, addressModel_1.updateAddress)(addressId, updatedAddress);

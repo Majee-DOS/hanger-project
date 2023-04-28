@@ -36,3 +36,11 @@ const getUserById = async (userId: string) => {
 };
 
 export { createUser, getUserByEmail, emailExists, getUserById };
+  export function create(testUser: { name: string; email: string; userName: string; password: string; }) {
+    throw new Error('Function not implemented.');
+  }
+
+  export function deleteMany(arg0: {}) {
+    throw new Error('Function not implemented.');
+  }
+

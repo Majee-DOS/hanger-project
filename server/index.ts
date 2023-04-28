@@ -7,6 +7,13 @@ import addressRoutes from './routes/addressRoutes';
 import itemRoutes from './routes/itemRoutes';
 
 import { errorHandlingMiddleware } from './middleware/errorHandlingMiddleware';
+import http from 'http';
+import { callback } from './app';
+
+const server = http.createServer(callback);
+server.listen(3010, () =>
+  console.log(`Server running on http://localhost:${3010}`)
+);
 
 const app = new Koa();
 const PORT = 3020;

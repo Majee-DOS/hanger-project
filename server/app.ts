@@ -41,4 +41,4 @@ router.delete('/delete-item/:id', authenticationMiddleware, deleteItem);
 
 app.use(router.routes()).use(router.allowedMethods());
 
-export { app };
+export const callback = app.callback();
