@@ -2,7 +2,6 @@ import app from '../index';
 import supertest from 'supertest';
 import { deleteOne } from '../models/userModel';
 import { deleteAddress } from '../models/addressModel';
-import { MongooseError } from 'mongoose';
 
 let userId: string;
 let addressId: string;
