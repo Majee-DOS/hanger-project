@@ -80,9 +80,13 @@ export const UpdateAddressFunction = async (value: AddressInterface) => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    const result = await axios.put(`${rootURL}/add-address`, value, {
-      headers,
-    });
+    const result = await axios.put(
+      `${rootURL}/update-address/${value._id}`,
+      value,
+      {
+        headers,
+      }
+    );
     message.success('You have updated your address');
     return result;
   } catch (error) {
