@@ -22,9 +22,6 @@ const getUserByEmail = async (email: string): Promise<IUser | null> => {
   return User.findOne({ email });
 };
 
-//Need to explicitly cast the result of  User.exists({ email }) to a boolean type
-/* This ensures that the function always returns a boolean value, regardless of the actual value returned by User.exists.
-The Boolean() function converts any truthy value to true and any falsy value (including null and undefined) to false. */
 const emailExists = async (email: string) => {
   const result = User.exists({ email });
   return result;
@@ -35,12 +32,9 @@ const getUserById = async (userId: string) => {
   return result;
 };
 
-export { createUser, getUserByEmail, emailExists, getUserById };
-  export function create(testUser: { name: string; email: string; userName: string; password: string; }) {
-    throw new Error('Function not implemented.');
-  }
+const deleteOne = async (userId: string) => {
+  const result = User.findOneAndDelete({ _id: userId });
+  return result;
+};
 
-  export function deleteMany(arg0: {}) {
-    throw new Error('Function not implemented.');
-  }
-
+export { createUser, getUserByEmail, emailExists, getUserById, deleteOne };
