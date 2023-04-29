@@ -1,96 +1,76 @@
-const rootURL = "http://localhost:3020";
+import axios, { AxiosError } from 'axios';
+import { message } from 'antd';
+import { RegisterInterface } from './interfaces/register';
+import { LoginInterface } from './interfaces/login';
+import { AddressInterface } from './interfaces/address';
+import { ItemInterface } from './interfaces/item';
+import { ImageInterface } from './interfaces/image';
 
-interface regUser {
-  name: String;
-  userName: string;
-  email: string;
-  password: string;
+const rootURL = 'http://localhost:3020';
+
+type NavigateFunction = (path: string, state?: any) => void;
+
+interface RegistrationError {
+  message: string;
 }
 
-export async function createUser(user: regUser) {
-  return await fetch(rootURL + "/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((res) => res.json())
-    .then((data) => localStorage.setItem("userId", data._id));
-}
+export const RegisterFunction = async (
+  value: RegisterInterface,
+  navigate: NavigateFunction
+) => {
+  try {
+    await axios.post(`${rootURL}/register`, value);
+    message.success('Registered successfully! Redirecting to login.');
+    navigate('/login');
+  } catch (error) {
+    const axiosError = error as AxiosError<RegistrationError>;
+    if (
+      axiosError.response &&
+      axiosError.response.data.message === 'Email already in use'
+    ) {
+      message.error(
+        'E-mail already in use, please try a different e-mail address'
+      );
+    } else {
+      message.error('Registration unsuccessful, try again later');
+    }
+  }
+};
 
-interface item {
-  img: string;
-  user?: string;
-  title: string;
-  desc: string;
-  category: string;
-  condition: string;
-  price: string;
-  size: string;
-}
+export const LoginFunction = async (
+  value: LoginInterface,
+  navigate: NavigateFunction
+) => {
+  try {
+    const result = await axios.post(`${rootURL}/login`, value);
+    if (result.data.success) {
+      localStorage.setItem('hanger-user', JSON.stringify(result.data.user));
+      localStorage.setItem('hanger-token', JSON.stringify(result.data.token));
+      message.success('Logged in successfully!');
+      navigate('/');
+    } else {
+      message.error(
+        'Login failed, check your e-mail or password and try again!'
+      );
+    }
+  } catch (error) {
+    message.error('Login failed, check your e-mail or password and try again!');
+  }
+};
 
-export async function addItem(item: item, userId) {
-  const response = await fetch(`${rootURL}/addItem/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(item),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-    localStorage.setItem("itemId", data._id); 
-    localStorage.setItem("user", data.user)});
-    return response
-}
+export const PostItemFunction = async (val: ItemInterface) => {
+  try {
+    const token = localStorage.getItem('hanger-token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
-export async function getProfile(userId) {
-  const response = await fetch(`${rootURL}/profile/${userId}`);
-  return response.json();
-}
+    const result = await axios.post(`${rootURL}/add-item`, val, { headers });
+    message.success('Item added successfully!');
+    return result.data;
+  } catch (error) {
+    message.error('Item could not be added, please try again later');
+  }
+};
 
-interface data {
-  houseNo: number;
-  streetName: string;
-  postCode: string;
-  city: string;
-}
-
-export async function addAddress(data: data, userId) {
-  const response = await fetch(`${rootURL}/update/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => res.json())
-    .then((data) => data);
-
-  return response;
-}
-
-interface img{
-  img: any
-}
-
-export async function sendImage(img: img) {
-  await fetch(`${rootURL}/upload/image`, {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(img)
-  })
-}
-
-export async function displayAllItems() {
-  const response = await fetch(`${rootURL}/allItems`);
-  return response.json();
-}
-
-export async function myWardrobe(user) {
-  const response = await fetch(`${rootURL}/wardrobe/${user}`);
-  return response.json()
-}
+// export const AllListedItemsFunction= async ()
