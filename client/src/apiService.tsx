@@ -58,14 +58,45 @@ export const LoginFunction = async (
   }
 };
 
-export const PostItemFunction = async (val: ItemInterface) => {
+export const AddAddressFunction = async (value: AddressInterface) => {
+  try {
+    const token = localStorage.getItem('hanger-token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const result = await axios.post(`${rootURL}/add-address`, value, {
+      headers,
+    });
+    message.success('You have added a address');
+    return result.data;
+  } catch (error) {
+    message.error('Users can only have one address');
+  }
+};
+
+export const UpdateAddressFunction = async (value: AddressInterface) => {
+  try {
+    const token = localStorage.getItem('hanger-token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const result = await axios.put(`${rootURL}/add-address`, value, {
+      headers,
+    });
+    message.success('You have updated your address');
+  } catch (error) {
+    message.error('Your address could not be updated, please try again later');
+  }
+};
+
+export const PostItemFunction = async (value: ItemInterface) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
-    const result = await axios.post(`${rootURL}/add-item`, val, { headers });
+    const result = await axios.post(`${rootURL}/add-item`, value, { headers });
     message.success('Item added successfully!');
     return result.data;
   } catch (error) {
