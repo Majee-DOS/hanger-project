@@ -84,6 +84,7 @@ export const UpdateAddressFunction = async (value: AddressInterface) => {
       headers,
     });
     message.success('You have updated your address');
+    return result;
   } catch (error) {
     message.error('Your address could not be updated, please try again later');
   }
