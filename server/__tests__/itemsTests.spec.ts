@@ -24,6 +24,7 @@ describe('Item Testing', () => {
             password: 'testPass1',
         });
         expect(res.status).toBe(200);
+        userId = res.body.user._id;
         token = res.body.token;
     });
 
@@ -70,4 +71,42 @@ describe('Item Testing', () => {
         const res = await supertest.agent(app).delete(`/delete-item/${itemId}`);
         expect(res.status).toBe(201);
     })
+
+    it('should not add an item without authentication', async () => {
+        const res = await supertest.agent(app)
+            .post('/add-Item')
+            .send({
+                title: 'test1',
+                desc: 'test1',
+                category: 'test1',
+                condition: 'test1',
+                price: 100,
+                size: 'test1',
+                img: 'test1',
+            });
+        expect(res.status).toBe(403);
+    })
+    
+    it('should not edit an item with invalid ID', async () => {
+        const res = await supertest.agent(app)
+            .put('/update-item/invalidID')
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+                price: 9999,
+            });
+        expect(res.status).toBe(404);
+    })
+    
+    it('should not get items specific to an invalid user', async () => {
+        const res = await supertest.agent(app)
+            .get('/user-items/invalidID')
+            .set('Authorization', `Bearer ${token}`);
+        expect(res.status).toBe(404);
+    })
+    
+    it('should not delete an invalid item', async () => {
+        const res = await supertest.agent(app).delete('/delete-item/invalidID');
+        expect(res.status).toBe(403);
+    })
+    
 })
