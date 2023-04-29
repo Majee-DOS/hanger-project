@@ -74,3 +74,30 @@ export const PostItemFunction = async (val: ItemInterface) => {
 };
 
 // export const AllListedItemsFunction= async ()
+
+
+// TODO: Function to handle image during Item Creation
+export const SendItemFunction = async () => { }
+
+export const EditItemFunction = async (val: ItemInterface) => {
+  try {
+    const token = localStorage.getItem('hanger-token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    }
+    const result = await axios.put(`${rootURL}/update-item/${val._id}`, val, { headers });
+    message.success('Item updated successfully!');
+  } catch (error) {
+    message.error('Item could not be updated, please try again later');
+  }
+}
+
+// export const GetUserItemsFunction = async () => {
+//   try {
+//     const token = localStorage.getItem('hanger-token');
+//     const headers = {
+//       Authorization: `Bearer ${token}`,
+//     }
+//     const result = await axios.get(`${rootURL}/user-items/${localStorage.getItem('')}`, { headers });
+//   }
+// }
