@@ -8,6 +8,7 @@ let userId: string;
 let addressId: string;
 let token: string;
 let itemId: string;
+//comment delete
 
 describe('registration', () => {
   it('should register a user', async () => {
