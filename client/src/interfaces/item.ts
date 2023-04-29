@@ -1,4 +1,5 @@
 export interface ItemInterface {
+  _id?: string;
   img: string;
   user?: string;
   title: string;
