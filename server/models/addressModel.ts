@@ -32,4 +32,9 @@ const updateAddress = (addressId: string, updatedAddress: IUserAddress) => {
   );
 };
 
-export { addUserAddress, updateAddress };
+const deleteOne = async (addressId: string) => {
+  const result = UserAddress.findOneAndDelete({ _id: addressId });
+  return result;
+};
+
+export { addUserAddress, updateAddress, deleteOne };
