@@ -9,8 +9,8 @@ const authMiddleware = async (ctx: Context, next: Next): Promise<void> => {
   const authHeaders = ctx.headers['authorization'];
   if (!authHeaders) {
     ctx.status = 403;
-    ctx.body = { error: 'No authorization header provided' };
-    return;
+    ctx.body = { message: 'No authorization header provided' };
+    return; // Do not call next()
   }
 
   const token = authHeaders.split(' ')[1];
@@ -20,15 +20,15 @@ const authMiddleware = async (ctx: Context, next: Next): Promise<void> => {
     const user: typeof User | null = await User.getUserById(_id);
     if (!user) {
       ctx.status = 401;
-      ctx.body = { error: 'Invalid or expired token' };
-      return;
+      ctx.body = { message: 'Invalid or expired token' };
+      return; // Do not call next()
     }
     ctx.state.user = user;
     return next();
   } catch (error) {
     ctx.status = 401;
-    ctx.body = { error: 'Invalid or expired token' };
-    return;
+    ctx.body = { message: 'Invalid or expired token' };
+    return; // Do not call next()
   }
 };
 
