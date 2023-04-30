@@ -7,7 +7,7 @@ const router = new Router<DefaultState, Context>();
 
 router.post('/add-item', authenticationMiddleware, controller.addItem);
 
-router.get('/get-items', authenticationMiddleware, controller.getAllItems);
+router.get('/get-items', controller.getAllItems);
 
 router.get(
   '/user-items/:id',
