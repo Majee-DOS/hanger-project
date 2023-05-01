@@ -3,15 +3,15 @@ import "./LoginView.css";
 import Logo from "../images/Hanger.svg";
 
 interface RegisterProps {
-  showRegistration: () => void;
-  toggleLoggedIn: () => void;
+  // showRegistration: () => void;
+  // toggleLoggedIn: () => void;
 }
 const LoginView: React.FC<RegisterProps> = ({
-  showRegistration,
-  toggleLoggedIn,
+  // showRegistration,
+  // toggleLoggedIn,
 }) => {
   const handleLogin = () => {
-    toggleLoggedIn();
+    // toggleLoggedIn();
   };
 
   return (
@@ -46,7 +46,7 @@ const LoginView: React.FC<RegisterProps> = ({
             </a>
             <p>
               Dont have an account? Register{" "}
-              <a onClick={showRegistration}>here 🎯</a>
+              {/* <a onClick={showRegistration}>here 🎯</a> */}
             </p>
           </div>
         </div>
