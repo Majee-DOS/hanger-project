@@ -4,12 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 import './Profile.css';
 import { Button, Drawer, Space } from 'antd';
-import { AddAddressFunction } from '../apiService';
+import {
+  AddAddressFunction,
+  GetUserAddressFunction,
+  UpdateAddressFunction,
+} from '../apiService';
 import { useEffect, useState } from 'react';
 import { Input } from '@material-tailwind/react';
 import { GetUserItemsFunction } from '../apiService';
 import SellitemProfile from '../components/SellItemProfile';
 import ItemProfile from '../components/ItemProfile';
+import { AddressInterface } from '../interfaces/address';
 
 interface Props {
   toggleComponent: () => void;
@@ -17,9 +22,9 @@ interface Props {
 }
 
 const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
-  const [userName, setUserName] = useState(null);
-  const [userEmail, setUserEmail] = useState(null);
-  const [name, setName] = useState(null);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [name, setName] = useState('');
   const [open, setOpen] = useState(false);
   const [houseNo, setHouseNo] = useState(null);
   const [streetName, setStreetName] = useState('');
@@ -27,16 +32,29 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const [city, setCity] = useState('');
   const [items, setItems] = useState([]);
   const [drawerAddress, setDrawerAddress] = useState(false);
-
-  // const [user, setUser] = useState({
-  //   name: null,
-  //   email: null,
-  // });
-  // const staticUser = {};
+  const [addressExists, setAddressExists] = useState(false);
 
   useEffect(() => {
     // renderProfile();
     renderProfile2();
+  }, []);
+
+  useEffect(() => {
+    GetUserAddressFunction()
+      .then((address) => {
+        if (address && address.length > 0) {
+          setAddressExists(true);
+          setHouseNo(address[0].houseNo);
+          setStreetName(address[0].streetName);
+          setPostCode(address[0].postCode);
+          setCity(address[0].city);
+        } else {
+          setAddressExists(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleCancel = () => {
@@ -48,17 +66,44 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const showDrawerAddress = () => {
     setDrawerAddress(true);
   };
-  const test = localStorage.getItem('hanger-token');
+
   const onSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     try {
-      console.log(test);
-      await AddAddressFunction({
-        houseNo,
-        streetName,
-        postCode,
-        city,
-      });
+      if (addressExists) {
+        await UpdateAddressFunction({
+          houseNo,
+          streetName,
+          postCode,
+          city,
+        });
+      } else {
+        await AddAddressFunction({
+          houseNo,
+          streetName,
+          postCode,
+          city,
+        });
+      }
+      // Fetch the updated address
+      GetUserAddressFunction()
+        .then((address) => {
+          if (address && address.length > 0) {
+            setAddressExists(true);
+            setHouseNo(address[0].houseNo);
+            setStreetName(address[0].streetName);
+            setPostCode(address[0].postCode);
+            setCity(address[0].city);
+          } else {
+            setAddressExists(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // Close the address drawer
+      setDrawerAddress(false);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +126,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
       <div className=' flex p-24'>
         <FontAwesomeIcon
           icon={faUserAstronaut}
-          className='userIcon bg-orange-50 shadow-2xl m-24 mr-20 p-12 mt-2 mr-9 text-9xl text-slate-300 rounded-full'
+          className='userIcon bg-orange-50 shadow-2xl m-24  p-12 mt-2 mr-9 text-9xl text-slate-300 rounded-full'
         />
         <div className='w-2/5 rounded-2xl shadow-2xl bg-orange-50 relative ml-20'>
           <h1 className='text-3xl p-10 font-bold'>{userName}</h1>
@@ -144,14 +189,14 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
           </Space>
         }
       >
-        <form className='mt-10 flex mb-10  ' onSubmit={onSubmit}>
+        <form className='mt-10 flex mb-10 flex-col  ' onSubmit={onSubmit}>
           <div className='flex flex-col mr-10 gap-6'>
             <Input
               type='number'
               label='House Number'
               className='bg-white'
               value={houseNo}
-              onChange={(e) => setHouseNo(e.target.value)}
+              onChange={(e) => setHouseNo(parseInt(e.target.value))}
             />
             <Input
               label='Street'
@@ -173,12 +218,12 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
             />
           </div>
           <Button
-            className=' bg-green-900  text-white'
+            className=' bg-green-900  text-white mt-10 w-20'
             type='primary'
             htmlType='submit'
             onSubmit={onSubmit}
           >
-            Update
+            {addressExists ? 'Update' : 'Add'}
           </Button>
         </form>
       </Drawer>

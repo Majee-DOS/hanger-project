@@ -1,6 +1,7 @@
 import { IUserAddress } from '../interfaces/addressInterface';
 import {
   addUserAddress,
+  getAddressByUserId,
   updateAddress as updateAddressModel,
 } from '../models/addressModel';
 import { Context, Next, ParameterizedContext } from 'koa';
@@ -34,4 +35,17 @@ const updateAddress = async (ctx: ParameterizedContext, next: Next) => {
   }
 };
 
-export { registerAddress, updateAddress };
+const getUserAddress = async (ctx: ParameterizedContext, next: Next) => {
+  try {
+    // console.log(ctx.request.params);
+    //const requestParams = ctx.request.params as { id: string };
+    const result = await getAddressByUserId(ctx.params.id);
+    ctx.status = 200;
+    ctx.body = result;
+    await next();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { registerAddress, updateAddress, getUserAddress };

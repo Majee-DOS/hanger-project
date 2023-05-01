@@ -16,7 +16,10 @@ const userAddress = new mongoose.Schema({
 
 const UserAddress = mongoose.model<IUserAddress>('address', userAddress);
 //name before was updateAddress, changed it to addUserAddress, because the operation below is a 'create' operation, and not a 'find and update' operation for mongoose backend
-
+const getAddressByUserId = async (userId: string) => {
+  const data = await UserAddress.find({ user: userId });
+  return data;
+};
 const addUserAddress = async (data: IUserAddress, userId: string) => {
   const newUser = new UserAddress({ ...data, user: userId });
   return newUser.save();
@@ -37,4 +40,4 @@ const deleteAddress = async (addressId: string) => {
   return result;
 };
 
-export { addUserAddress, updateAddress, deleteAddress };
+export { getAddressByUserId, addUserAddress, updateAddress, deleteAddress };
