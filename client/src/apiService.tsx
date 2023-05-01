@@ -139,7 +139,7 @@ export const EditItemFunction = async (val: ItemInterface) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
     const result = await axios.put(`${rootURL}/update-item/${val._id}`, val, {
       headers,
@@ -156,7 +156,7 @@ export const GetUserItemsFunction = async () => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
     //retreive user data from local storage and parse to get the user id
     const userData = JSON.parse(localStorage.getItem('hanger-user'));
@@ -185,7 +185,7 @@ export const DeleteItemFunction = async (itemId: string) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
     //this id should be the item id not the user id
     const result = await axios.delete(`${rootURL}/delete-item/${itemId}`, {

@@ -15,6 +15,7 @@ import { GetUserItemsFunction } from '../apiService';
 import SellitemProfile from '../components/SellItemProfile';
 import ItemProfile from '../components/ItemProfile';
 import { AddressInterface } from '../interfaces/address';
+import Item from './Item';
 
 interface Props {
   toggleComponent: () => void;
@@ -32,11 +33,38 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const [city, setCity] = useState('');
   const [items, setItems] = useState([]);
   const [drawerAddress, setDrawerAddress] = useState(false);
+  
+  // useEffect(() => {
+  //   GetUserItemsFunction().then((data) => {
+  //     const sortedItems = data.sort((a, b) => {
+  //       return (
+  //         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  //       );
+  //     });
+
+  //     setItems(sortedItems);
+  //   });
+  // }, []);
+
+  // const [user, setUser] = useState({
+  //   name: null,
+  //   email: null,
+  // });
+  // const staticUser = {};
   const [addressExists, setAddressExists] = useState(false);
 
   useEffect(() => {
     // renderProfile();
     renderProfile2();
+    GetUserItemsFunction().then((data) => {
+      const sortedItems = data.sort((a, b) => {
+        return (
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+      });
+
+      setItems(sortedItems);
+    });
   }, []);
 
   useEffect(() => {
@@ -172,6 +200,11 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
         >
           Add
         </button>
+      </div>
+      <div className='flex ml-6 mr-6 mt-3 overflow-auto scrollbar'>
+        {items.map((item) => (
+          <Item key={item._id} item={item} />
+        ))}
       </div>
       <div className='flex ml-6 mr-6 overflow-auto'>
         {items.map((item) => (
