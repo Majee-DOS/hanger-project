@@ -13,9 +13,12 @@ const Item: React.FC = () => {
   const [catInput, setCatInput] = useState('');
   const [sizeInput, setSizeInput] = useState('');
   const [previewSource, setPreviewSource] = useState(null);
+  //Temporarily store image in string form
+  const [stringImage, setStringImage] = useState('');
 
   const inputFile = useRef<HTMLInputElement>();
   const userId = localStorage.getItem('userId');
+ 
 
   function handleDrop(e) {
     e.preventDefault();
@@ -48,7 +51,7 @@ const Item: React.FC = () => {
   const handleUploadBtn = async (e) => {
     e.preventDefault();
     const formItem = {
-      img: previewSource,
+      img: stringImage,
       title: titleInput,
       desc: descInput,
       price: priceInput,
@@ -66,6 +69,7 @@ const Item: React.FC = () => {
     setTitleInput('');
     setSizeInput('');
     setPreviewSource(null);
+    setStringImage('');
   };
 
   return (
@@ -83,6 +87,12 @@ const Item: React.FC = () => {
             label='Title'
             className='bg-white  '
             onChange={(e) => setTitleInput(e.target.value)}
+          />
+          <Input
+            value={stringImage}
+            label='Image'
+            className='bg-white  '
+            onChange={(e) => setStringImage(e.target.value)}
           />
           <Textarea
             value={descInput}
