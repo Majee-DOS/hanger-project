@@ -33,7 +33,8 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const [city, setCity] = useState('');
   const [items, setItems] = useState([]);
   const [drawerAddress, setDrawerAddress] = useState(false);
-  
+  const [addressId, setAddressId] = useState(null);
+
   // useEffect(() => {
   //   GetUserItemsFunction().then((data) => {
   //     const sortedItems = data.sort((a, b) => {
@@ -72,6 +73,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
       .then((address) => {
         if (address && address.length > 0) {
           setAddressExists(true);
+          setAddressId(address[0]._id); // Add this line
           setHouseNo(address[0].houseNo);
           setStreetName(address[0].streetName);
           setPostCode(address[0].postCode);
@@ -100,6 +102,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     try {
       if (addressExists) {
         await UpdateAddressFunction({
+          _id: addressId, // Add this line
           houseNo,
           streetName,
           postCode,

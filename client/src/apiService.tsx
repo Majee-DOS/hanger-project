@@ -95,7 +95,6 @@ export const AddAddressFunction = async (value: AddressInterface) => {
 
 export const UpdateAddressFunction = async (value: AddressInterface) => {
   try {
-    console.log('Value:', value);
     const token = localStorage.getItem('hanger-token');
     const headers = {
       Authorization: `Bearer ${token.replace(/"/g, '')}`,
@@ -108,9 +107,9 @@ export const UpdateAddressFunction = async (value: AddressInterface) => {
       }
     );
     message.success('You have updated your address');
-    // return result;
+    return result.data;
   } catch (error) {
-    message.error('Your address could not be updated, please try again later');
+    message.error('Could not update your address, please try again later');
   }
 };
 
