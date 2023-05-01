@@ -196,3 +196,12 @@ export const DeleteItemFunction = async (itemId: string) => {
     message.error('Item could not be deleted, please try again later');
   }
 };
+
+export const StripeTransactionFunction = async () => {
+  try {
+    const result = await axios.post('/create-payment-intent');
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
