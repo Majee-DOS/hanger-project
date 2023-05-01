@@ -39,8 +39,6 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     renderProfile2();
   }, []);
 
-  const userId = localStorage.getItem('userId');
-
   const handleCancel = () => {
     setOpen(false);
   };
@@ -51,27 +49,15 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     setDrawerAddress(true);
   };
 
-  const handleUpdate = async () => {
-    const data = {
-      houseNo: houseNo,
-      streetName: streetName,
-      postCode: postCode,
-      city: city,
-    };
-    const user = await AddAddressFunction(data);
-    setHouseNo(user.houseNo);
-    setStreetName(user.streetName);
-    setPostCode(user.postCode);
-    setCity(user.city);
-    setDrawerAddress(false);
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await AddAddressFunction({ houseNo, streetName, postCode, city });
+      // console.log({ name, userName, email, password });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  // async function renderProfile() {
-  //   const user = await getProfile(userId);
-  //   setUserName(user.userName);
-  //   setUserEmail(user.email);
-  //   setName(user.name);
-  // }
 
   const renderProfile2 = () => {
     GetUserItemsFunction().then((data) => {
@@ -154,7 +140,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
           </Space>
         }
       >
-        <form className='mt-10 flex mb-10'>
+        <form className='mt-10 flex mb-10  ' onSubmit={onSubmit}>
           <div className='flex flex-col mr-10 gap-6'>
             <Input
               value={houseNo}
@@ -182,10 +168,8 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
               onChange={(e) => setCity(e.target.value)}
             />
           </div>
+          <Button className=' bg-green-900  text-white'>Update</Button>
         </form>
-        <Button className=' bg-green-900  text-white' onClick={handleUpdate}>
-          Update
-        </Button>
       </Drawer>
       <Drawer
         title='Add Item'

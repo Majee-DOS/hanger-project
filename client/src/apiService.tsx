@@ -111,24 +111,25 @@ export const PostItemFunction = async (value: ItemInterface) => {
 
 // export const AllListedItemsFunction= async ()
 
-
 // TODO: Function to handle image during Item Creation
 // TODO: Learn how to implement cloudinary on Monday
-export const SendImageFunction = async () => { }
+export const SendImageFunction = async () => {};
 
 export const EditItemFunction = async (val: ItemInterface) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
       Authorization: `Bearer ${token}`,
-    }
-    const result = await axios.put(`${rootURL}/update-item/${val._id}`, val, { headers });
+    };
+    const result = await axios.put(`${rootURL}/update-item/${val._id}`, val, {
+      headers,
+    });
     message.success('Item updated successfully!');
     return result.data;
   } catch (error) {
     message.error('Item could not be updated, please try again later');
   }
-}
+};
 
 // Get Items specified by user
 export const GetUserItemsFunction = async () => {
@@ -136,15 +137,17 @@ export const GetUserItemsFunction = async () => {
     const token = localStorage.getItem('hanger-token');
     const headers = {
       Authorization: `Bearer ${token}`,
-    }
+    };
     //retreive user data from local storage and parse to get the user id
     const userData = JSON.parse(localStorage.getItem('hanger-user'));
-    const result = await axios.get(`${rootURL}/user-items/${userData._id}`, { headers });
+    const result = await axios.get(`${rootURL}/user-items/${userData._id}`, {
+      headers,
+    });
     return result.data;
   } catch (error) {
     message.error('User items could not be retrieved, please try again later');
   }
-}
+};
 
 // Get All Items does not require autherization
 export const GetAllItemsFunction = async () => {
@@ -154,21 +157,23 @@ export const GetAllItemsFunction = async () => {
   } catch (error) {
     message.error('Items could not be retrieved, please try again later');
   }
-}
+};
 
-// TODO: Figure out how the item id should be passed 
+// TODO: Figure out how the item id should be passed
 // either from the url or from the local storage
 export const DeleteItemFunction = async (itemId: string) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
       Authorization: `Bearer ${token}`,
-    }
+    };
     //this id should be the item id not the user id
-    const result = await axios.delete(`${rootURL}/delete-item/${itemId}`, { headers });
+    const result = await axios.delete(`${rootURL}/delete-item/${itemId}`, {
+      headers,
+    });
     message.success('Item deleted successfully!');
     return result.data;
   } catch (error) {
     message.error('Item could not be deleted, please try again later');
   }
-}
+};
