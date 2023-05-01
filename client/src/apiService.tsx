@@ -58,11 +58,30 @@ export const LoginFunction = async (
   }
 };
 
+export const GetUserAddressFunction = async () => {
+  try {
+    const token = localStorage.getItem('hanger-token');
+    const headers = {
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
+    };
+    //retreive user data from local storage and parse to get the user id
+    const userData = JSON.parse(localStorage.getItem('hanger-user'));
+    const result = await axios.get(`${rootURL}/user-address/${userData._id}`, {
+      headers,
+    });
+    return result.data;
+  } catch (error) {
+    message.error(
+      'User address could not be retrieved, please try again later'
+    );
+  }
+};
+
 export const AddAddressFunction = async (value: AddressInterface) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
     const result = await axios.post(`${rootURL}/add-address`, value, {
       headers,
@@ -76,9 +95,10 @@ export const AddAddressFunction = async (value: AddressInterface) => {
 
 export const UpdateAddressFunction = async (value: AddressInterface) => {
   try {
+    console.log('Value:', value);
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
     const result = await axios.put(
       `${rootURL}/update-address/${value._id}`,
@@ -88,7 +108,7 @@ export const UpdateAddressFunction = async (value: AddressInterface) => {
       }
     );
     message.success('You have updated your address');
-    return result;
+    // return result;
   } catch (error) {
     message.error('Your address could not be updated, please try again later');
   }
