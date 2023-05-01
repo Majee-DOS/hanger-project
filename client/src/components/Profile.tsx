@@ -48,18 +48,17 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const showDrawerAddress = () => {
     setDrawerAddress(true);
   };
-
+  const test = localStorage.getItem('hanger-token');
   const onSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     try {
+      console.log(test);
       await AddAddressFunction({
         houseNo,
         streetName,
         postCode,
         city,
       });
-
-      // console.log({ houseNo, streetName, postCode, city });
     } catch (error) {
       console.log(error);
     }

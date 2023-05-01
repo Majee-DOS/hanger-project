@@ -6,6 +6,6 @@ export interface ItemInterface {
   desc: string;
   category: string;
   condition: string;
-  price: string;
+  price: number;
   size: string;
 }
