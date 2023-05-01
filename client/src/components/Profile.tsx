@@ -49,26 +49,31 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     setDrawerAddress(true);
   };
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     try {
-      await AddAddressFunction({ houseNo, streetName, postCode, city });
-      // console.log({ name, userName, email, password });
+      await AddAddressFunction({
+        houseNo,
+        streetName,
+        postCode,
+        city,
+      });
+
+      // console.log({ houseNo, streetName, postCode, city });
     } catch (error) {
       console.log(error);
     }
   };
 
   const renderProfile2 = () => {
-    GetUserItemsFunction().then((data) => {
-      const sortedItems = data.sort((a, b) => {
-        return (
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-        );
-      });
-
-      setItems(sortedItems);
-    });
+    // GetUserItemsFunction().then((data) => {
+    //   const sortedItems = data.sort((a, b) => {
+    //     return (
+    //       new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    //     );
+    //   });
+    //   setItems(sortedItems);
+    // });
   };
 
   return (
@@ -77,7 +82,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
       <div className=' flex p-24'>
         <FontAwesomeIcon
           icon={faUserAstronaut}
-          // className='userIcon bg-orange-50 shadow-2xl m-24 mr-20 p-12 mt-2 mr-9 text-9xl text-slate-300 rounded-full'
+          className='userIcon bg-orange-50 shadow-2xl m-24 mr-20 p-12 mt-2 mr-9 text-9xl text-slate-300 rounded-full'
         />
         <div className='w-2/5 rounded-2xl shadow-2xl bg-orange-50 relative ml-20'>
           <h1 className='text-3xl p-10 font-bold'>{userName}</h1>
@@ -143,32 +148,39 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
         <form className='mt-10 flex mb-10  ' onSubmit={onSubmit}>
           <div className='flex flex-col mr-10 gap-6'>
             <Input
-              value={houseNo}
               type='number'
               label='House Number'
               className='bg-white'
+              value={houseNo}
               onChange={(e) => setHouseNo(e.target.value)}
             />
             <Input
-              value={streetName}
               label='Street'
               className='bg-white'
+              value={streetName}
               onChange={(e) => setStreetName(e.target.value)}
             />
             <Input
-              value={postCode}
               label='Post code'
               className='bg-white'
+              value={postCode}
               onChange={(e) => setPostCode(e.target.value)}
             />
             <Input
-              value={city}
               label='City'
               className='bg-white'
+              value={city}
               onChange={(e) => setCity(e.target.value)}
             />
           </div>
-          <Button className=' bg-green-900  text-white'>Update</Button>
+          <Button
+            className=' bg-green-900  text-white'
+            type='primary'
+            htmlType='submit'
+            onSubmit={onSubmit}
+          >
+            Update
+          </Button>
         </form>
       </Drawer>
       <Drawer

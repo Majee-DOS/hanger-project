@@ -6,7 +6,7 @@ import { RegisterFunction } from '../apiService';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-export let newUser;
+// export let newUser;
 interface RegisterProps {
   toggleLoggedIn: () => void;
   showRegistration: () => void;

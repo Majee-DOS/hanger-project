@@ -42,10 +42,10 @@ export const LoginFunction = async (
   navigate: NavigateFunction
 ) => {
   try {
-    const result = await axios.post(`${rootURL}/login`, value);
-    if (result.data.success) {
-      localStorage.setItem('hanger-user', JSON.stringify(result.data.user));
-      localStorage.setItem('hanger-token', JSON.stringify(result.data.token));
+    const res = await axios.post(`${rootURL}/login`, value);
+    if (res.data.success) {
+      localStorage.setItem('hanger-user', JSON.stringify(res.data.user));
+      localStorage.setItem('hanger-token', res.data.token);
       message.success('Logged in successfully!');
       navigate('/');
     } else {
