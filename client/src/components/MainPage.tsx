@@ -38,7 +38,8 @@ const MainPage: React.FC<Props> = ({
 
       setItems(sortedItems);
     });
-  }, [items]);
+  }, []);
+
   function showRegistration() {
     setIsRegOpen(!isRegOpen);
   }
@@ -46,6 +47,7 @@ const MainPage: React.FC<Props> = ({
   const toggleLoggedIn = () => {
     setIsLoginOpen(false);
   };
+
   const handleCancel = () => {
     setIsRegOpen(false);
     setIsLoginOpen(false);
