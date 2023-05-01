@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './LoginView.css';
 import { Input, Card, Typography, Button } from '@material-tailwind/react';
 import { useState } from 'react';
@@ -27,13 +27,20 @@ const Register: React.FC<RegisterProps> = ({
     event.preventDefault();
     try {
       await RegisterFunction({ name, userName, email, password }, navigate);
+      console.log({ name, userName, email, password });
       info();
     } catch (error) {
       console.log(error);
     }
   };
-  toggleLoggedIn();
-  showRegistration();
+
+  useEffect(() => {
+    toggleLoggedIn();
+    // showRegistration();
+  }, []); //fix this issue, registration API not sending information  from register thingy
+
+  // toggleLoggedIn();
+  // showRegistration();
 
   const info = () => {
     messageApi.info(`Hello! Your account is ready!`);
@@ -85,7 +92,7 @@ const Register: React.FC<RegisterProps> = ({
               </div>
               <a>
                 {contextHolder}
-                <Button className='mt-6 bg-green-900' fullWidth>
+                <Button className='mt-6 bg-green-900' fullWidth type='submit'>
                   Register
                 </Button>
               </a>
