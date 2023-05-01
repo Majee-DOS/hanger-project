@@ -8,14 +8,17 @@ import { PostItemFunction } from '../apiService';
 const Item: React.FC = () => {
   const [titleInput, setTitleInput] = useState('');
   const [descInput, setDescInput] = useState('');
-  const [priceInput, setPriceInput] = useState('');
+  const [priceInput, setPriceInput] = useState(0);
   const [condInput, setCondInput] = useState('');
   const [catInput, setCatInput] = useState('');
   const [sizeInput, setSizeInput] = useState('');
   const [previewSource, setPreviewSource] = useState(null);
+  //Temporarily store image in string form
+  const [stringImage, setStringImage] = useState('');
 
   const inputFile = useRef<HTMLInputElement>();
   const userId = localStorage.getItem('userId');
+
 
   function handleDrop(e) {
     e.preventDefault();
@@ -48,24 +51,26 @@ const Item: React.FC = () => {
   const handleUploadBtn = async (e) => {
     e.preventDefault();
     const formItem = {
-      img: previewSource,
+      img: stringImage,
       title: titleInput,
       desc: descInput,
-      price: priceInput,
+      price: Number(priceInput),
       condition: condInput,
       category: catInput,
       size: sizeInput,
     };
 
+    console.log(formItem);
     await PostItemFunction(formItem);
 
     setCatInput('');
     setCondInput('');
     setDescInput('');
-    setPriceInput('');
+    setPriceInput(0);
     setTitleInput('');
     setSizeInput('');
     setPreviewSource(null);
+    setStringImage('');
   };
 
   return (
@@ -84,6 +89,18 @@ const Item: React.FC = () => {
             className='bg-white  '
             onChange={(e) => setTitleInput(e.target.value)}
           />
+          <Input
+            value={stringImage}
+            label='Image'
+            className='bg-white  '
+            onChange={(e) => setStringImage(e.target.value)}
+          />
+          {/* <Input
+            value={priceInput}
+            label='Price'
+            className='bg-white  '
+            onChange={(e) => setPriceInput(Number(e.target.value))}
+          /> */}
           <Textarea
             value={descInput}
             label='Description...'
@@ -99,7 +116,7 @@ const Item: React.FC = () => {
               label='Price'
               type='number'
               className='mb-5 bg-white '
-              onChange={(e) => setPriceInput(e.target.value)}
+              onChange={(e) => setPriceInput(parseInt(e.target.value))}
             />
           </div>
           <Select

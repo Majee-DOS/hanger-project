@@ -55,7 +55,7 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
       img: previewSource,
       title: titleInput,
       desc: descInput,
-      price: priceInput,
+      price: Number(priceInput),
       condition: condInput,
       category: catInput,
       size: sizeInput,

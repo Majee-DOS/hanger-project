@@ -98,7 +98,7 @@ export const PostItemFunction = async (value: ItemInterface) => {
   try {
     const token = localStorage.getItem('hanger-token');
     const headers = {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.replace(/"/g, '')}`,
     };
 
     const result = await axios.post(`${rootURL}/add-item`, value, { headers });
