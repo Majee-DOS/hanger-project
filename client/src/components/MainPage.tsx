@@ -136,8 +136,8 @@ const MainPage: React.FC<Props> = ({
           footer={false}
         >
           <LoginView
-            showRegistration={showRegistration}
-            toggleLoggedIn={toggleLoggedIn}
+            // showRegistration={showRegistration}
+            // toggleLoggedIn={toggleLoggedIn}
           />
         </Modal>
       </>
