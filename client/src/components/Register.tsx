@@ -27,8 +27,7 @@ const Register: React.FC<RegisterProps> = ({
     event.preventDefault();
     try {
       await RegisterFunction({ name, userName, email, password }, navigate);
-      console.log({ name, userName, email, password });
-      info();
+      // console.log({ name, userName, email, password });
     } catch (error) {
       console.log(error);
     }
@@ -36,15 +35,7 @@ const Register: React.FC<RegisterProps> = ({
 
   useEffect(() => {
     toggleLoggedIn();
-    // showRegistration();
-  }, []); //fix this issue, registration API not sending information  from register thingy
-
-  // toggleLoggedIn();
-  // showRegistration();
-
-  const info = () => {
-    messageApi.info(`Hello! Your account is ready!`);
-  };
+  }, []);
 
   return (
     <div className='view2'>
