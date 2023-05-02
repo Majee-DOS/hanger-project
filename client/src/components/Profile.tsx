@@ -233,24 +233,32 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
               className='bg-white'
               value={houseNo}
               onChange={(e) => setHouseNo(parseInt(e.target.value))}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
             <Input
               label='Street'
               className='bg-white'
               value={streetName}
               onChange={(e) => setStreetName(e.target.value)}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
             <Input
               label='Post code'
               className='bg-white'
               value={postCode}
               onChange={(e) => setPostCode(e.target.value)}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
             <Input
               label='City'
               className='bg-white'
               value={city}
               onChange={(e) => setCity(e.target.value)}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
           </div>
           <Button
