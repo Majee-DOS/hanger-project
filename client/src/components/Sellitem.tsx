@@ -15,43 +15,27 @@ const Item: React.FC = () => {
   const [previewSource, setPreviewSource] = useState(null);
   //Temporarily store image in string form
   const [stringImage, setStringImage] = useState('');
+  const [cloudImg, setCloudImg] = useState('');
 
   const inputFile = useRef<HTMLInputElement>();
   const userId = localStorage.getItem('userId');
 
 
+
   function handleDrop(e) {
     e.preventDefault();
-    const file = e.target.files[0];
-
-    previewFile(file);
-    if (inputFile.current) {
-      inputFile.current.click();
+    const baseImg = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(baseImg);
+    reader.onloadend = () => {
+      setCloudImg(reader.result.toString());
     }
   }
-  const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPreviewSource(reader.result);
-    };
-  };
-  function handleSubmitFile(e) {
-    e.preventDefault();
-    uploadImage(previewSource);
-  }
-
-  const uploadImage = (base64EncodedImage) => {
-    const imageData = {
-      img: previewSource,
-    };
-    // sendImage(imageData);
-  };
 
   const handleUploadBtn = async (e) => {
     e.preventDefault();
     const formItem = {
-      img: stringImage,
+      img: cloudImg,
       title: titleInput,
       desc: descInput,
       price: Number(priceInput),
@@ -79,8 +63,6 @@ const Item: React.FC = () => {
         <img src={previewSource} alt='preview image' className='h-40' />
       )}
       <input ref={inputFile} type='file' name='image' onChange={handleDrop} />
-      <form onSubmit={handleSubmitFile}></form>
-
       <form className='mt-10 flex mb-10'>
         <div className='flex flex-col mr-10 gap-6'>
           <Input

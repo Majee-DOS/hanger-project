@@ -2,12 +2,17 @@ import * as model from '../models/itemsModel';
 //ParameterizedContext is needed to access params property of a Koa ctx object in TypeScript
 import { Context, Next, ParameterizedContext } from 'koa';
 import { IItem } from '../interfaces/itemInterface';
+import cloudinary from '../cloudinary';
 
 const addItem = async (ctx: Context, next: Next): Promise<void> => {
   try {
     // console.log('ITEMINFO:', ctx.request.body);
     // console.log('userId:', ctx.state.user._id);
     const requestBody = ctx.request.body as IItem;
+    //upload image to cloudinary
+    const uploadedResponse = await cloudinary.uploader.upload(requestBody.img);
+    //set returned cloudinary url to overwrite the base64 image string
+    requestBody.img = uploadedResponse.secure_url;
     const result = await model.addItemToUser(
       requestBody,
       ctx.state.user._id
