@@ -22,11 +22,25 @@ const MainPage: React.FC<Props> = ({
   searchText,
   setSearchText,
 }) => {
-  const [isRegOpen, setIsRegOpen] = useState(true);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState('');
+
+  const checkIfUserIsLoggedIn = () => {
+    const token = localStorage.getItem('hanger-token');
+    const user = localStorage.getItem('hanger-user');
+
+    return token !== null && user !== null;
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(checkIfUserIsLoggedIn());
+  const [isRegOpen, setIsRegOpen] = useState(!isLoggedIn);
+
+  const toggleLoggedIn = () => {
+    setIsLoggedIn(false);
+    setIsLoggedIn(checkIfUserIsLoggedIn());
+  };
 
   useEffect(() => {
     GetAllItemsFunction().then((data) => {
@@ -43,10 +57,6 @@ const MainPage: React.FC<Props> = ({
   function showRegistration() {
     setIsRegOpen(!isRegOpen);
   }
-
-  const toggleLoggedIn = () => {
-    setIsLoginOpen(false);
-  };
 
   const handleCancel = () => {
     setIsRegOpen(false);
@@ -136,8 +146,8 @@ const MainPage: React.FC<Props> = ({
           footer={false}
         >
           <LoginView
-            // showRegistration={showRegistration}
-            // toggleLoggedIn={toggleLoggedIn}
+          // showRegistration={showRegistration}
+          // toggleLoggedIn={toggleLoggedIn}
           />
         </Modal>
       </>

@@ -4,7 +4,7 @@ import { Input, Card, Typography, Button } from '@material-tailwind/react';
 import { useState } from 'react';
 import { RegisterFunction } from '../apiService';
 import { message } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // export let newUser;
 interface RegisterProps {
@@ -42,7 +42,12 @@ const Register: React.FC<RegisterProps> = ({
       <div className='flex justify-center items-center pt-24 pb-30'>
         <div className='login-box border border-black flex flex-col items-center'>
           <h1 className='mt-10 text-6xl mb-10'>Hi there 🖖🏻</h1>
-          <Card color='transparent' shadow={false}>
+          <Card
+            color='transparent'
+            shadow={false}
+            onResize={undefined}
+            onResizeCapture={undefined}
+          >
             <Typography color='gray' className='mt-1 font-normal'>
               Enter your details to register.
             </Typography>
@@ -57,6 +62,8 @@ const Register: React.FC<RegisterProps> = ({
                   className='bg-white'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  onResize={undefined}
+                  onResizeCapture={undefined}
                 />
                 <Input
                   size='lg'
@@ -64,6 +71,8 @@ const Register: React.FC<RegisterProps> = ({
                   className='bg-white'
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
+                  onResize={undefined}
+                  onResizeCapture={undefined}
                 />
                 <Input
                   size='lg'
@@ -71,6 +80,8 @@ const Register: React.FC<RegisterProps> = ({
                   className='bg-white'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onResize={undefined}
+                  onResizeCapture={undefined}
                 />
                 <Input
                   type='password'
@@ -79,14 +90,26 @@ const Register: React.FC<RegisterProps> = ({
                   className='bg-white'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onResize={undefined}
+                  onResizeCapture={undefined}
                 />
               </div>
               <a>
                 {contextHolder}
-                <Button className='mt-6 bg-green-900' fullWidth type='submit'>
+                <Button
+                  className='mt-6 bg-green-900'
+                  fullWidth
+                  type='submit'
+                  onResize={undefined}
+                  onResizeCapture={undefined}
+                >
                   Register
                 </Button>
               </a>
+
+              <Link to='/login'>
+                Already Have an account? Click here to login!
+              </Link>
             </form>
           </Card>
         </div>

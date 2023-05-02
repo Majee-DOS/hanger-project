@@ -89,12 +89,16 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
             label='Title'
             className='bg-white  '
             onChange={(e) => setTitleInput(e.target.value)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           />
           <Textarea
             value={descInput}
             label='Description...'
             className='bg-white '
             onChange={(e) => setDescInput(e.target.value)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           />
         </div>
         <div className='flex flex-col gap-6'>
@@ -106,6 +110,8 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
               type='number'
               className='mb-5 bg-white '
               onChange={(e) => setPriceInput(e.target.value)}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
           </div>
           <Select
@@ -113,6 +119,8 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
             value={sizeInput}
             className='mb-5 bg-white '
             onChange={(e) => setSizeInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='S'>S</Option>
             <Option value='M'>M</Option>
@@ -130,6 +138,8 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
             value={catInput}
             className='mb-5 bg-white '
             onChange={(e) => setCatInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='Men'>Men</Option>
             <Option value='Women'>Women</Option>
@@ -141,6 +151,8 @@ const Item: React.FC<Props> = ({ renderProfile2 }) => {
             label='Condition'
             className='bg-white'
             onChange={(e) => setCondInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='New'>New</Option>
             <Option value='Like New'>Like New</Option>

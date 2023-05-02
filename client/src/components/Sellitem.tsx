@@ -19,7 +19,6 @@ const Item: React.FC = () => {
   const inputFile = useRef<HTMLInputElement>();
   const userId = localStorage.getItem('userId');
 
-
   function handleDrop(e) {
     e.preventDefault();
     const file = e.target.files[0];
@@ -88,12 +87,16 @@ const Item: React.FC = () => {
             label='Title'
             className='bg-white  '
             onChange={(e) => setTitleInput(e.target.value)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           />
           <Input
             value={stringImage}
             label='Image'
             className='bg-white  '
             onChange={(e) => setStringImage(e.target.value)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           />
           {/* <Input
             value={priceInput}
@@ -106,6 +109,8 @@ const Item: React.FC = () => {
             label='Description...'
             className='bg-white '
             onChange={(e) => setDescInput(e.target.value)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           />
         </div>
         <div className='flex flex-col gap-6'>
@@ -117,6 +122,8 @@ const Item: React.FC = () => {
               type='number'
               className='mb-5 bg-white '
               onChange={(e) => setPriceInput(parseInt(e.target.value))}
+              onResize={undefined}
+              onResizeCapture={undefined}
             />
           </div>
           <Select
@@ -124,6 +131,8 @@ const Item: React.FC = () => {
             value={sizeInput}
             className='mb-5 bg-white '
             onChange={(e) => setSizeInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='S'>S</Option>
             <Option value='M'>M</Option>
@@ -141,6 +150,8 @@ const Item: React.FC = () => {
             value={catInput}
             className='mb-5 bg-white '
             onChange={(e) => setCatInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='Men'>Men</Option>
             <Option value='Women'>Women</Option>
@@ -152,6 +163,8 @@ const Item: React.FC = () => {
             label='Condition'
             className='bg-white'
             onChange={(e) => setCondInput(e)}
+            onResize={undefined}
+            onResizeCapture={undefined}
           >
             <Option value='New'>New</Option>
             <Option value='Like New'>Like New</Option>
