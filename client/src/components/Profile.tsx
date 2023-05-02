@@ -153,7 +153,11 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
 
   return (
     <div className='profile-view'>
-      <NavBar toggleComponent={toggleComponent} setSearchText={setSearchText} />
+      <NavBar
+        toggleComponent={toggleComponent}
+        setSearchText={setSearchText}
+        isLoggedIn
+      />
       <div className=' flex p-24'>
         <FontAwesomeIcon
           icon={faUserAstronaut}

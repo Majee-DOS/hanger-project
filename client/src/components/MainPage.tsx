@@ -74,6 +74,7 @@ const MainPage: React.FC<Props> = ({
         <NavBar
           toggleComponent={toggleComponent}
           setSearchText={setSearchText}
+          isLoggedIn={isLoggedIn}
         />
         <FilterBar setCategoryFilter={setCategoryFilter} />
       </div>

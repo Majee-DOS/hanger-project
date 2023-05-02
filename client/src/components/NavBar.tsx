@@ -6,16 +6,21 @@ import Logo from '../images/Hanger.svg';
 import { Button, Drawer, Space } from 'antd';
 import { useState } from 'react';
 import Sellitem from './Sellitem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface ItemProps {
   setSearchText: any;
   toggleComponent: () => void;
+  isLoggedIn: boolean;
 }
 
-const NavBar: React.FC<ItemProps> = ({ toggleComponent, setSearchText }) => {
+const NavBar: React.FC<ItemProps> = ({
+  toggleComponent,
+  setSearchText,
+  isLoggedIn,
+}) => {
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleCancel = () => {
     setOpen(false);
   };
@@ -57,12 +62,25 @@ const NavBar: React.FC<ItemProps> = ({ toggleComponent, setSearchText }) => {
         {/* notification icon here
       (with state if new message)  */}
       </div>
-      <a
-        onClick={showDrawer}
-        className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
-      >
-        Sell Now
-      </a>
+      {isLoggedIn ? (
+        <a
+          onClick={() => {
+            localStorage.removeItem('hanger-user');
+            localStorage.removeItem('hanger-token');
+            navigate('/login');
+          }}
+          className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
+        >
+          Log Out
+        </a>
+      ) : (
+        <Link
+          to='/login'
+          className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
+        >
+          Login
+        </Link>
+      )}
       {/*  sell button here */}
 
       <Drawer
