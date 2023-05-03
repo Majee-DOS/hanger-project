@@ -125,7 +125,7 @@ const MainPage: React.FC<Props> = ({
           .filter((item) => item.category.includes(categoryFilter))
           .filter((item) => item.title.includes(searchText))
           .map((item) => (
-            <Item key={item._id} item={item} />
+            <Item key={item._id}  img={item.img} title={item.title}  desc={item.desc} condition={item.condition} category={item.category} price={item.price} size={item.size} />
           ))}
       </div>
       <Modal

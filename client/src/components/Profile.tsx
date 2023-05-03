@@ -12,10 +12,10 @@ import {
 import { useEffect, useState } from 'react';
 import { Input } from '@material-tailwind/react';
 import { GetUserItemsFunction } from '../apiService';
-import SellitemProfile from '../components/SellItemProfile';
-import ItemProfile from '../components/ItemProfile';
 import { AddressInterface } from '../interfaces/address';
 import Item from './Item';
+import Sellitem from './Sellitem';
+import { title } from 'process';
 
 interface Props {
   toggleComponent: () => void;
@@ -100,7 +100,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     try {
       if (addressExists) {
         await UpdateAddressFunction({
-          _id: addressId, // Add this line
+          _id: addressId,
           houseNo,
           streetName,
           postCode,
@@ -197,12 +197,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
       </div>
       <div className='flex ml-6 mr-6 mt-3 overflow-auto scrollbar'>
         {items.map((item) => (
-          <Item key={item._id} item={item} />
-        ))}
-      </div>
-      <div className='flex ml-6 mr-6 overflow-auto'>
-        {items.map((item) => (
-          <ItemProfile key={item._id} item={item} />
+          <Item key={item._id} img={item.img} title={item.title}  desc={item.desc} condition={item.condition} category={item.category} price={item.price} size={item.size} />
         ))}
       </div>
       <Drawer
@@ -273,7 +268,9 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
             <Button onClick={handleCancel}>Cancel</Button>
           </Space>
         }
-      ></Drawer>
+      >
+        <Sellitem />
+      </Drawer>
     </div>
   );
 };

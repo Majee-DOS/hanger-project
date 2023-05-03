@@ -1,43 +1,27 @@
 
 import React from "react";
 import { Popover, notification } from "antd";
+import { ItemInterface } from "../interfaces/item";
 
-
-interface ItemProps {
-  item: {
-    img: string;
-    title: string;
-    price: number;
-    size: string;
-    desc: string;
-    condition: string;
-    category: string;
-  };
-}
-
-const Item: React.FC<ItemProps> = ({ item }) => {
-
-   
-
-    const openNotification = () => {
-        notification.open({
-          message: "Notification sent!",
-          description:
-            "The Seller will receive notification that you would like to buy this product, and contact with you when receives the payment. ",
-        });
-    }
-
+const Item: React.FC<ItemInterface> = ({ _id, img, title, desc, category, condition, price, size }) => {
+  const openNotification = () => {
+    notification.open({
+      message: "Notification sent!",
+      description:
+        "The Seller will receive notification that you would like to buy this product, and contact with you when receives the payment. ",
+    });
+  }
 
   const content = (
     <div className="flex flex-col items-start w-60">
-      <p className="font-bold">{item.title}</p>
-      <p className="text-center">{item.desc}</p>
-      <p className="font-bold">£{item.price}</p>
+      <p className="font-bold">{title}</p>
+      <p className="text-center">{desc}</p>
+      <p className="font-bold">£{price}</p>
       <h4>
-        <span className="font-bold">size:</span> {item.size}
+        <span className="font-bold">size:</span> {size}
       </h4>
       <p>
-        <span className="font-bold">condition:</span> {item.condition}
+        <span className="font-bold">condition:</span> {condition}
       </p>
       <button
         onClick={openNotification}
@@ -50,20 +34,20 @@ const Item: React.FC<ItemProps> = ({ item }) => {
 
   return (
     <>
-        <Popover content={content} title="Item Description">
-      <div
-        className="flex flex-col items-center "
-        style={{ minWidth: "250px" }}
-      >
+      <Popover content={content} title="Item Description">
+        <div
+          className="flex flex-col items-center "
+          style={{ minWidth: "250px" }}
+        >
           <img
-            src={item.img}
+            src={img}
             className="h-72 rounded-xl m-4  p-2 hover:shadow-2xl transition-shadow"
           />
-          <h1>{item.title}</h1>
-          <p>£{item.price}</p>
-          <p>size: {item.size}</p>
-      </div>
-        </Popover>
+          <h1>{title}</h1>
+          <p>£{price}</p>
+          <p>size: {size}</p>
+        </div>
+      </Popover>
     </>
   );
 };
