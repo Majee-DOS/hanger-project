@@ -1,8 +1,11 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Popover, notification } from "antd";
 import { ItemInterface } from "../interfaces/item";
 import { EditItemFunction, DeleteItemFunction } from "../apiService";
+import { async } from "q";
+import { Button, Drawer, Space } from "antd";
+import EditItem from "./EditItem";
+import Sellitem from "./Sellitem";
 
 
 interface ItemProps extends ItemInterface {
@@ -10,6 +13,7 @@ interface ItemProps extends ItemInterface {
 }
 
 const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition, price, size, user, profileView }) => {
+  const [open, setOpen] = useState(false);
   const openNotification = () => {
     notification.open({
       message: "Notification sent!",
@@ -22,9 +26,40 @@ const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition,
     await DeleteItemFunction(_id);
   }
 
-  const editItem = () => {
-    
+  const editItem = async () => {
+
+    const formItem: ItemInterface = {
+      _id,
+      img,
+      title,
+      desc,
+      category,
+      condition,
+      price,
+      size,
+    }
+    await EditItemFunction(formItem);
+
   }
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const showDrawer = () => {
+    const formItem: ItemInterface = {
+      _id,
+      img,
+      title,
+      desc,
+      category,
+      condition,
+      price,
+      size,
+    }
+
+    setOpen(true);
+  };
 
   const content = (
     <div className="flex flex-col items-start w-60">
@@ -42,7 +77,7 @@ const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition,
         {profileView ? (
           <>
             <button
-              onClick={openNotification}
+              onClick={showDrawer}
               className="ring-2 ring-green-500 bg-green-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
             >
               EDIT
@@ -82,6 +117,20 @@ const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition,
           <p>size: {size}</p>
         </div>
       </Popover>
+      <Drawer
+        title='Edit Item'
+        width={520}
+        onClose={handleCancel}
+        open={open}
+        bodyStyle={{ paddingBottom: 80 }}
+        extra={
+          <Space>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </Space>
+        }
+      >
+        <EditItem _id={_id} img={img} title={title}  desc={desc} condition={condition} category={category} price={price} size={size}/>
+      </Drawer>
     </>
   );
 };
