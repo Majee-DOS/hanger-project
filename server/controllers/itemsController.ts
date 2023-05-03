@@ -10,9 +10,9 @@ const addItem = async (ctx: Context, next: Next): Promise<void> => {
     // console.log('userId:', ctx.state.user._id);
     const requestBody = ctx.request.body as IItem;
     //upload image to cloudinary
-    const uploadedResponse = await cloudinary.uploader.upload(requestBody.img);
+    //const uploadedResponse = await cloudinary.uploader.upload(requestBody.img);
     //set returned cloudinary url to overwrite the base64 image string
-    requestBody.img = uploadedResponse.secure_url;
+    //requestBody.img = uploadedResponse.secure_url;
     const result = await model.addItemToUser(
       requestBody,
       ctx.state.user._id
