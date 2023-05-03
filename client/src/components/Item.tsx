@@ -12,12 +12,12 @@ interface CartItem {
   title: string;
   price: number;
 }
-    
+
 interface ItemProps extends ItemInterface {
   profileView?: boolean;
 }
 
-const Item: React.FC<ItemInterface> = ({
+const Item: React.FC<ItemProps> = ({
   _id,
   img,
   title,
@@ -96,7 +96,7 @@ const Item: React.FC<ItemInterface> = ({
     setOpen(false);
   };
 
-  const showDrawer = () => {
+  const showEditDrawer = () => {
     setOpen(true);
   };
 
@@ -115,7 +115,7 @@ const Item: React.FC<ItemInterface> = ({
         {profileView ? (
           <>
             <button
-              onClick={showDrawer}
+              onClick={showEditDrawer}
               className="ring-2 ring-green-500 bg-green-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
             >
               EDIT
@@ -128,12 +128,12 @@ const Item: React.FC<ItemInterface> = ({
             </button>
           </>
         ) : (
-      <button
-        onClick={addToCart}
-        className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer'
-      >
-        ADD TO CART
-      </button>
+          <button
+            onClick={addToCart}
+            className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer'
+          >
+            ADD TO CART
+          </button>
         )}
       </div>
     </div>
@@ -167,9 +167,9 @@ const Item: React.FC<ItemInterface> = ({
           </Space>
         }
       >
-        <EditItem _id={_id} img={img} title={title}  desc={desc} condition={condition} category={category} price={price} size={size}/>
-        </Drawer>
-      <Drawer>
+        <EditItem _id={_id} img={img} title={title} desc={desc} condition={condition} category={category} price={price} size={size} />
+      </Drawer>
+      <Drawer
         title='Checkout'
         open={drawerVisible}
         onClose={() => {
