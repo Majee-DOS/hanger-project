@@ -18,15 +18,6 @@ const LoginView: React.FC<RegisterProps> = (
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (
-      localStorage.getItem('hanger-user') &&
-      localStorage.getItem('hanger-token')
-    ) {
-      navigate('/');
-    }
-  }, []);
-
   const onClick = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     try {
@@ -36,6 +27,14 @@ const LoginView: React.FC<RegisterProps> = (
       console.log(error);
     }
   };
+  useEffect(() => {
+    if (
+      localStorage.getItem('hanger-user') &&
+      localStorage.getItem('hanger-token')
+    ) {
+      navigate('/');
+    }
+  });
 
   return (
     <div className='view'>
@@ -71,8 +70,8 @@ const LoginView: React.FC<RegisterProps> = (
             >
               Login
             </button>
-            <p>
-              Dont have an account? Register{' '}
+            <p className='flex justify-center'>
+              Dont have an account? Register
               <Link to={'/'}>
                 <a>here 🎯</a>
               </Link>
