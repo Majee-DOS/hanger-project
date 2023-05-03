@@ -7,7 +7,6 @@ import { Button, Drawer, Space } from "antd";
 import EditItem from "./EditItem";
 import Sellitem from "./Sellitem";
 
-
 interface ItemProps extends ItemInterface {
   profileView?: boolean;
 }
@@ -26,38 +25,11 @@ const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition,
     await DeleteItemFunction(_id);
   }
 
-  const editItem = async () => {
-
-    const formItem: ItemInterface = {
-      _id,
-      img,
-      title,
-      desc,
-      category,
-      condition,
-      price,
-      size,
-    }
-    await EditItemFunction(formItem);
-
-  }
-
   const handleCancel = () => {
     setOpen(false);
   };
 
   const showDrawer = () => {
-    const formItem: ItemInterface = {
-      _id,
-      img,
-      title,
-      desc,
-      category,
-      condition,
-      price,
-      size,
-    }
-
     setOpen(true);
   };
 
