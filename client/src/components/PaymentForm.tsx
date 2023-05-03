@@ -31,7 +31,7 @@ const PaymentForm: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 flex items-center justify-center'>
+    <div className='bg-white flex items-center justify-center'>
       <div className='bg-white p-8 rounded-lg max-w-md w-full'>
         <h2 className='text-2xl font-bold mb-4'>Payment</h2>
         {paymentSuccess ? (

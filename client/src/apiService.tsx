@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import { RegisterInterface } from './interfaces/register';
 import { LoginInterface } from './interfaces/login';
 import { AddressInterface } from './interfaces/address';
