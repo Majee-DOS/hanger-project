@@ -10,9 +10,9 @@ const Item: React.FC = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [condInput, setCondInput] = useState('');
   const [catInput, setCatInput] = useState('');
-  const [sizeInput, setSizeInput] = useState('');  
+  const [sizeInput, setSizeInput] = useState('');
   const [itemImage, setItemImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
   //remove this
 
   const handleUploadBtn = async (e) => {
@@ -39,27 +39,35 @@ const Item: React.FC = () => {
   };
 
   const uploadImage = () => {
-    const data = new FormData()
-    data.append("file", itemImage)
-    data.append("upload_preset", "reactHanger")
-    data.append("cloud_name", "dgwarr7v8")
-    fetch("https://api.cloudinary.com/v1_1/dgwarr7v8/image/upload", {
-      method: "post",
-      body: data
+    const data = new FormData();
+    data.append('file', itemImage);
+    data.append('upload_preset', 'reactHanger');
+    data.append('cloud_name', 'dgwarr7v8');
+    fetch('https://api.cloudinary.com/v1_1/dgwarr7v8/image/upload', {
+      method: 'post',
+      body: data,
     })
-      .then(resp => resp.json())
-      .then(data => {
-        setImageUrl(data.url)
+      .then((resp) => resp.json())
+      .then((data) => {
+        setImageUrl(data.url);
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
       <div>
         <div>
-          <input type="file" onChange={(e) => setItemImage(e.target.files?.[0] || null)} />
-          <button onClick={uploadImage}>Upload Image</button>
+          <input
+            type='file'
+            onChange={(e) => setItemImage(e.target.files?.[0] || null)}
+          />
+          <button
+            className='bg-orange-700 p-2 rounded-xl font-semibold text-white'
+            onClick={uploadImage}
+          >
+            Upload Image
+          </button>
         </div>
         <div>
           <h1>Uploaded image will be displayed below</h1>

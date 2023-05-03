@@ -70,7 +70,7 @@ const NavBar: React.FC<ItemProps> = ({
           }}
           className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
         >
-          Log Out
+          <Link to='/'>Log Out</Link>
         </a>
       ) : (
         <Link
@@ -80,12 +80,15 @@ const NavBar: React.FC<ItemProps> = ({
           Login
         </Link>
       )}
-      <a
-        onClick={showDrawer}
-        className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
-      >
-        Sell Now
-      </a>
+      {isLoggedIn && (
+        <a
+          onClick={showDrawer}
+          className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
+        >
+          Sell Now
+        </a>
+      )}
+
       <Drawer
         title='Add Item'
         width={520}
