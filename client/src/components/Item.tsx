@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { Popover, Drawer, Form, Input, Button, notification } from 'antd';
+import { Popover, Drawer, Form, Input, Button, notification, Space } from 'antd';
 import { ItemInterface } from '../interfaces/item';
 import PaymentForm from './PaymentForm';
+import { EditItemFunction, DeleteItemFunction } from "../apiService";
+import { async } from "q";
+import EditItem from "./EditItem";
+import Sellitem from "./Sellitem";
 
 interface CartItem {
   _id: string;
   title: string;
   price: number;
+}
+    
+interface ItemProps extends ItemInterface {
+  profileView?: boolean;
 }
 
 const Item: React.FC<ItemInterface> = ({
@@ -18,9 +26,12 @@ const Item: React.FC<ItemInterface> = ({
   condition,
   price,
   size,
+  user,
+  profileView
 }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [open, setOpen] = useState(false);
   const [shippingInfo, setShippingInfo] = useState({
     address: '',
     postalCode: '',
@@ -77,6 +88,18 @@ const Item: React.FC<ItemInterface> = ({
     });
   };
 
+  const deleteItem = async () => {
+    await DeleteItemFunction(_id);
+  }
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
   const content = (
     <div className='flex flex-col items-start w-60'>
       <p className='font-bold'>{title}</p>
@@ -88,12 +111,31 @@ const Item: React.FC<ItemInterface> = ({
       <p>
         <span className='font-bold'>condition:</span> {condition}
       </p>
+      <div className="flex justify-center items-center space-x-3 mt-3 w-full">
+        {profileView ? (
+          <>
+            <button
+              onClick={showDrawer}
+              className="ring-2 ring-green-500 bg-green-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
+            >
+              EDIT
+            </button>
+            <button
+              onClick={deleteItem}
+              className="ring-2 ring-red-500 bg-red-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
+            >
+              DELETE
+            </button>
+          </>
+        ) : (
       <button
         onClick={addToCart}
         className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer'
       >
         ADD TO CART
       </button>
+        )}
+      </div>
     </div>
   );
 
@@ -114,6 +156,20 @@ const Item: React.FC<ItemInterface> = ({
         </div>
       </Popover>
       <Drawer
+        title='Edit Item'
+        width={520}
+        onClose={handleCancel}
+        open={open}
+        bodyStyle={{ paddingBottom: 80 }}
+        extra={
+          <Space>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </Space>
+        }
+      >
+        <EditItem _id={_id} img={img} title={title}  desc={desc} condition={condition} category={category} price={price} size={size}/>
+        </Drawer>
+      <Drawer>
         title='Checkout'
         open={drawerVisible}
         onClose={() => {

@@ -197,7 +197,7 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
       </div>
       <div className='flex ml-6 mr-6 mt-3 overflow-auto scrollbar'>
         {items.map((item) => (
-          <Item key={item._id} img={item.img} title={item.title}  desc={item.desc} condition={item.condition} category={item.category} price={item.price} size={item.size} />
+          <Item key={item._id} _id={item._id} img={item.img} title={item.title}  desc={item.desc} condition={item.condition} category={item.category} price={item.price} size={item.size} profileView={true}/>
         ))}
       </div>
       <Drawer
