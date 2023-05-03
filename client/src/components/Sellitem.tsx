@@ -13,6 +13,7 @@ const Item: React.FC = () => {
   const [sizeInput, setSizeInput] = useState('');  
   const [itemImage, setItemImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
+  //remove this
 
   const handleUploadBtn = async (e) => {
     e.preventDefault();
