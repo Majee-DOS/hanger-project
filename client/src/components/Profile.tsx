@@ -55,8 +55,6 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
   const [addressExists, setAddressExists] = useState(false);
 
   useEffect(() => {
-    // renderProfile();
-    renderProfile2();
     GetUserItemsFunction().then((data) => {
       const sortedItems = data.sort((a, b) => {
         return (
@@ -138,17 +136,6 @@ const Profile: React.FC<Props> = ({ toggleComponent, setSearchText }) => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const renderProfile2 = () => {
-    // GetUserItemsFunction().then((data) => {
-    //   const sortedItems = data.sort((a, b) => {
-    //     return (
-    //       new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    //     );
-    //   });
-    //   setItems(sortedItems);
-    // });
   };
 
   return (
