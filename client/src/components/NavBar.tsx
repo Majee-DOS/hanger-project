@@ -51,12 +51,12 @@ const NavBar: React.FC<ItemProps> = ({
           </a>
         )}
 
-        <Link to='/payment'>
+        {/* <Link to='/payment'>
           <FontAwesomeIcon
             icon={faCommentDollar}
             className='notification p-4 mt-2 mr-9 text-2xl '
           />
-        </Link>
+        </Link> */}
 
         {/* notification icon here
       (with state if new message)  */}
