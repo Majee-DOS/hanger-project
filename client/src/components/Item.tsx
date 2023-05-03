@@ -2,14 +2,28 @@
 import React from "react";
 import { Popover, notification } from "antd";
 import { ItemInterface } from "../interfaces/item";
+import { EditItemFunction, DeleteItemFunction } from "../apiService";
 
-const Item: React.FC<ItemInterface> = ({ _id, img, title, desc, category, condition, price, size }) => {
+
+interface ItemProps extends ItemInterface {
+  profileView?: boolean;
+}
+
+const Item: React.FC<ItemProps> = ({ _id, img, title, desc, category, condition, price, size, user, profileView }) => {
   const openNotification = () => {
     notification.open({
       message: "Notification sent!",
       description:
         "The Seller will receive notification that you would like to buy this product, and contact with you when receives the payment. ",
     });
+  }
+
+  const deleteItem = async () => {
+    await DeleteItemFunction(_id);
+  }
+
+  const editItem = () => {
+    
   }
 
   const content = (
@@ -23,12 +37,32 @@ const Item: React.FC<ItemInterface> = ({ _id, img, title, desc, category, condit
       <p>
         <span className="font-bold">condition:</span> {condition}
       </p>
-      <button
-        onClick={openNotification}
-        className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
-      >
-        BUY NOW
-      </button>
+
+      <div className="flex justify-center items-center space-x-3 mt-3 w-full">
+        {profileView ? (
+          <>
+            <button
+              onClick={openNotification}
+              className="ring-2 ring-green-500 bg-green-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
+            >
+              EDIT
+            </button>
+            <button
+              onClick={deleteItem}
+              className="ring-2 ring-red-500 bg-red-500 text-white rounded-md p-1 self-center mt-3 hover:cursor-pointer"
+            >
+              DELETE
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={openNotification}
+            className="ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 hover:cursor-pointer"
+          >
+            BUY NOW
+          </button>
+        )}
+      </div>
     </div>
   );
 
