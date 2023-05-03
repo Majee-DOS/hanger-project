@@ -22,11 +22,25 @@ const MainPage: React.FC<Props> = ({
   searchText,
   setSearchText,
 }) => {
-  const [isRegOpen, setIsRegOpen] = useState(true);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState('');
+
+  const checkIfUserIsLoggedIn = () => {
+    const token = localStorage.getItem('hanger-token');
+    const user = localStorage.getItem('hanger-user');
+
+    return token !== null && user !== null;
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(checkIfUserIsLoggedIn());
+  const [isRegOpen, setIsRegOpen] = useState(!isLoggedIn);
+
+  const toggleLoggedIn = () => {
+    setIsLoggedIn(false);
+    setIsLoggedIn(checkIfUserIsLoggedIn());
+  };
 
   useEffect(() => {
     GetAllItemsFunction().then((data) => {
@@ -44,10 +58,6 @@ const MainPage: React.FC<Props> = ({
     setIsRegOpen(!isRegOpen);
   }
 
-  const toggleLoggedIn = () => {
-    setIsLoginOpen(false);
-  };
-
   const handleCancel = () => {
     setIsRegOpen(false);
     setIsLoginOpen(false);
@@ -64,6 +74,7 @@ const MainPage: React.FC<Props> = ({
         <NavBar
           toggleComponent={toggleComponent}
           setSearchText={setSearchText}
+          isLoggedIn={isLoggedIn}
         />
         <FilterBar setCategoryFilter={setCategoryFilter} />
       </div>
@@ -136,8 +147,8 @@ const MainPage: React.FC<Props> = ({
           footer={false}
         >
           <LoginView
-            // showRegistration={showRegistration}
-            // toggleLoggedIn={toggleLoggedIn}
+          // showRegistration={showRegistration}
+          // toggleLoggedIn={toggleLoggedIn}
           />
         </Modal>
       </>

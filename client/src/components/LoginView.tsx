@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginView.css';
 import Logo from '../images/Hanger.svg';
 import { LoginFunction } from '../apiService';
@@ -17,6 +17,15 @@ const LoginView: React.FC<RegisterProps> = (
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      localStorage.getItem('hanger-user') &&
+      localStorage.getItem('hanger-token')
+    ) {
+      navigate('/');
+    }
+  }, []);
 
   const onClick = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
