@@ -10,7 +10,9 @@ const Item: React.FC = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [condInput, setCondInput] = useState('');
   const [catInput, setCatInput] = useState('');
-
+  const [sizeInput, setSizeInput] = useState('');  
+  const [itemImage, setItemImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleUploadBtn = async (e) => {
     e.preventDefault();

@@ -81,8 +81,12 @@ const NavBar: React.FC<ItemProps> = ({
           Login
         </Link>
       )}
-      {/*  sell button here */}
-
+      <a
+        onClick={showDrawer}
+        className='ring-2 ring-amber-900 bg-amber-900 text-white rounded-md p-1 self-center mr-12 hover:cursor-pointer text-center'
+      >
+        Sell Now
+      </a>
       <Drawer
         title='Add Item'
         width={520}
