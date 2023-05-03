@@ -1,7 +1,6 @@
 import React from 'react';
 import './Sellitem.css';
 import { useState } from 'react';
-import { useRef } from 'react';
 import { Textarea, Input, Select, Option } from '@material-tailwind/react';
 import { PostItemFunction } from '../apiService';
 
@@ -11,31 +10,14 @@ const Item: React.FC = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [condInput, setCondInput] = useState('');
   const [catInput, setCatInput] = useState('');
-  const [sizeInput, setSizeInput] = useState('');
-  const [previewSource, setPreviewSource] = useState(null);
-  //Temporarily store image in string form
-  const [stringImage, setStringImage] = useState('');
-  const [cloudImg, setCloudImg] = useState('');
-
-  const inputFile = useRef<HTMLInputElement>();
-  const userId = localStorage.getItem('userId');
-
-
-
-  function handleDrop(e) {
-    e.preventDefault();
-    const baseImg = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(baseImg);
-    reader.onloadend = () => {
-      setCloudImg(reader.result.toString());
-    }
-  }
+  const [sizeInput, setSizeInput] = useState('');  
+  const [itemImage, setItemImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleUploadBtn = async (e) => {
     e.preventDefault();
     const formItem = {
-      img: cloudImg,
+      img: imageUrl,
       title: titleInput,
       desc: descInput,
       price: Number(priceInput),
@@ -44,25 +26,45 @@ const Item: React.FC = () => {
       size: sizeInput,
     };
 
-    console.log(formItem);
     await PostItemFunction(formItem);
-
     setCatInput('');
     setCondInput('');
     setDescInput('');
     setPriceInput(0);
     setTitleInput('');
     setSizeInput('');
-    setPreviewSource(null);
-    setStringImage('');
+    setImageUrl('');
+    setItemImage(null);
   };
+
+  const uploadImage = () => {
+    const data = new FormData()
+    data.append("file", itemImage)
+    data.append("upload_preset", "reactHanger")
+    data.append("cloud_name", "dgwarr7v8")
+    fetch("https://api.cloudinary.com/v1_1/dgwarr7v8/image/upload", {
+      method: "post",
+      body: data
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        setImageUrl(data.url)
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
     <>
-      {previewSource && (
-        <img src={previewSource} alt='preview image' className='h-40' />
-      )}
-      <input ref={inputFile} type='file' name='image' onChange={handleDrop} />
+      <div>
+        <div>
+          <input type="file" onChange={(e) => setItemImage(e.target.files?.[0] || null)} />
+          <button onClick={uploadImage}>Upload Image</button>
+        </div>
+        <div>
+          <h1>Uploaded image will be displayed below</h1>
+          <img src={imageUrl} />
+        </div>
+      </div>
       <form className='mt-10 flex mb-10'>
         <div className='flex flex-col mr-10 gap-6'>
           <Input
@@ -71,18 +73,6 @@ const Item: React.FC = () => {
             className='bg-white  '
             onChange={(e) => setTitleInput(e.target.value)}
           />
-          <Input
-            value={stringImage}
-            label='Image'
-            className='bg-white  '
-            onChange={(e) => setStringImage(e.target.value)}
-          />
-          {/* <Input
-            value={priceInput}
-            label='Price'
-            className='bg-white  '
-            onChange={(e) => setPriceInput(Number(e.target.value))}
-          /> */}
           <Textarea
             value={descInput}
             label='Description...'
