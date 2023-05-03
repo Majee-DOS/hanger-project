@@ -33,7 +33,6 @@ const NavBar: React.FC<ItemProps> = ({
       <a onClick={toggleComponent}>
         <img src={Logo} className='w-24 h-24 ml-8' />
       </a>
-      {/* image here */}
       <form className='ml-14'>
         <input
           type='text'
@@ -42,16 +41,16 @@ const NavBar: React.FC<ItemProps> = ({
           onChange={(e) => setSearchText(e.target.value)}
         />
       </form>
-      {/* searchBar here */}
       <div className='m-2 flex'>
-        <a onClick={toggleComponent}>
-          <FontAwesomeIcon
-            icon={faUserAstronaut}
-            className='p-4 mt-2 mr-9 text-2xl hover:cursor-pointer'
-          />
-        </a>
+        {isLoggedIn && (
+          <a onClick={toggleComponent}>
+            <FontAwesomeIcon
+              icon={faUserAstronaut}
+              className='p-4 mt-2 mr-9 text-2xl hover:cursor-pointer'
+            />
+          </a>
+        )}
 
-        {/* profile img here  */}
         <Link to='/payment'>
           <FontAwesomeIcon
             icon={faCommentDollar}
