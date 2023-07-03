@@ -8,7 +8,7 @@
     "test": "jest",
     "start": "ts-node src/index.ts",
     "build": "npm i",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+    "dev": "nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
