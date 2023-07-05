@@ -27,6 +27,4 @@ app.use(itemRoutes.allowedMethods());
 app.use(stripeRoutes.routes());
 app.use(stripeRoutes.allowedMethods());
 
-export default app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+export default app.listen(PORT, () => console.log(`Server is up and running`));
